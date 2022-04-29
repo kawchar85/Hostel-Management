@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import Hostel from './components/Hostel';
-import Login from './components/Login';
+import Login from './pages/Login';
 import Logout from "./components/Logout";
 import Signup from "./components/Signup";
 import Error from "./components/Error";
