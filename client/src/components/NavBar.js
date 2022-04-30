@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import Axios from 'axios';
+import SingleHostel from './SingleHostel';
 
 export default function NavBar(props) {
 
@@ -9,18 +11,35 @@ export default function NavBar(props) {
         props.info(msg); //passing data to App.js
     }
 
-    function isLogged(){
+    function isLogged() {
         return false;
     }
 
-    let page1,page2;
-    if(isLogged())
-    {
+    const [hostelList, setHostelList] = useState([]);
+    //get Hostel list from Database
+    const getHostels = () => {
+        Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
+            //Axios.get("http://localhost:3001/hostel").then((response) => {
+            setHostelList(response.data);
+            console.log("list");
+            console.log(hostelList);
+        });
+    };
+
+    useEffect(() => {
+        console.log("effect...");
+        getHostels();
+
+        //hostel table change er track rakhte hobe.
+        //apadoto ignoring
+    }, []);
+
+    let page1, page2;
+    if (isLogged()) {
         page1 = "Profile";
         page2 = "Logout";
     }
-    else
-    {
+    else {
         page1 = "Login";
         page2 = "Signup";
     }
@@ -41,19 +60,21 @@ export default function NavBar(props) {
                             <Nav.Link href="/home">Home</Nav.Link>
 
                             <NavDropdown title="Hostels" id="navbarScrollingDropdown">
-                                <NavDropdown.Item href="/hostel/1">LH1</NavDropdown.Item>
-                                <NavDropdown.Item href="/hostel/2">LH2</NavDropdown.Item>
+                                {hostelList.map((val) => {
+                                    return <SingleHostel Hostel_ID={val.Hostel_ID} Name={val.Name} />
+                                }
+                                )}
+
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="/hostel/3">BH1</NavDropdown.Item>
-                                <NavDropdown.Item href="/hostel/4">BH2</NavDropdown.Item>
-                                <NavDropdown.Item href="/hostel/5">BH3</NavDropdown.Item>
+                                <NavDropdown.Item href="/hostel/420">Custom Test</NavDropdown.Item>
 
                             </NavDropdown>
-                            
-                            
-                            <Nav.Link href={"/"+page1}>{page1}</Nav.Link>
-                            <Nav.Link href={"/"+page2}>{page2}</Nav.Link>
-                            
+
+
+                            <Nav.Link href={"/" + page1}>{page1}</Nav.Link>
+                            <Nav.Link href={"/" + page2}>{page2}</Nav.Link>
+                            <Nav.Link href="/administration">Administration</Nav.Link>
+
                         </Nav>
                         <Form className="d-flex">
                             <FormControl
