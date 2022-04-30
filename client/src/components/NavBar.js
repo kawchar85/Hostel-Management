@@ -14,6 +14,9 @@ export default function NavBar(props) {
     function isLogged() {
         return false;
     }
+    function isAdministration() {
+        return true;
+    }
 
     const [hostelList, setHostelList] = useState([]);
     //get Hostel list from Database
@@ -73,7 +76,7 @@ export default function NavBar(props) {
 
                             <Nav.Link href={"/" + page1}>{page1}</Nav.Link>
                             <Nav.Link href={"/" + page2}>{page2}</Nav.Link>
-                            <Nav.Link href="/administration">Administration</Nav.Link>
+                            {isAdministration()&&(<Nav.Link href="/administration">Administration</Nav.Link>)}                            
 
                         </Nav>
                         <Form className="d-flex">
