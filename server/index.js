@@ -119,6 +119,7 @@ app.post("/add/administration", (req, res) => {
     );
 });
 
+
 app.post("/add/hostel", (req, res) => {
     const data = req.body;
 
@@ -142,6 +143,36 @@ app.post("/add/hostel", (req, res) => {
         }
     );
 });
+
+app.post("/add/students/auto" , (req, res) => {
+    const data = req.body;
+
+    const reg=data.reg;
+    const name = data.name;
+    const dept = data.dept;
+    const merit = data.merit;
+    const email = data.email;
+    const hostelID = data.hostelID;
+    const roomID = data.roomID;
+    const phone = data.phone;
+    const roleID = data.roleID;
+    const roleTag = data.roleTag;
+    const guardian_name = data.guardian_name;
+    const gurdian_address = data.gurdian_address;
+    const gurdian_phone = data.gurdian_phone;
+    db.query("INSERT INTO students(Reg,Name,Dept,Merit,Email,Hostel_ID,RoomID,Phone,Role_ID) VALUES (?,?,?,?,?,?,?,?,?)",
+    [reg,name,dept,merit,email,hostelID,roomID,phone,roleID],
+    (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+            res.status(201).json({"messege":"hi bro"});
+        }
+    }
+    );
+
+} );
 
 
 /*
@@ -223,6 +254,8 @@ app.get("/getData", (req, res) => {
 });
 
 
+
+
 app.listen(3001, () => {
-    console.log("Server is running on port 3001");
+    console.log("Server is running on port 5000");
 });

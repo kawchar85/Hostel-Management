@@ -3,12 +3,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from "react";
 import {useState} from "react";
 import { Container } from 'react-bootstrap';
-import validator from 'validator'
+import validator from 'validator';
+import Axios from 'axios';
 
 function Register() {
     const [RegisterState, setRegisterState] = useState({
         reg: "",
-        name: "",
+        std_name: "",
         dept: "",
         merit: "",
         email: "",
@@ -20,10 +21,28 @@ function Register() {
         gurdian_name: "",
         gurdian_address:"",
         gurdian_phone: "",
+    });
 
+    const addStudent =()=> {
+        Axios.post("http://localhost:3001/add/students/auto", {
+            "reg":RegisterState.reg,
+            "name":RegisterState.std_name,
+            "dept": RegisterState.dept,
+            "merit": RegisterState.merit,
+            "email": RegisterState.email,
+            "hostelID": RegisterState.hostelID,
+            "roomID": RegisterState.roomID,
+            "phone": RegisterState.phone,
+            "roleID":RegisterState.roleID,
+            "roleTag": RegisterState.roleTag,
+            "gurdian_name": RegisterState.gurdian_name,
+            "gurdian_address":RegisterState.gurdian_address,
+            "gurdian_phone": RegisterState.gurdian_phone
+        }).then(()=> {
+            console.log("yeeeee kaj korche")
+        } );
+    };
 
-
-    })
     return(
         <Container className="my-5">
             <div className="container">
@@ -174,6 +193,13 @@ function Register() {
                             />
                             <label for="gurdian_phone">gurdian phone</label>
                         </div>
+                        <button 
+                                type="submit" 
+                                className="btn btn-primary"
+                                onClick={addStudent}
+                            >
+                                Submit
+                            </button>
                     </div>
                 </div>
             </div>
