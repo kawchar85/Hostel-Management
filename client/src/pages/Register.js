@@ -17,6 +17,11 @@ function Register() {
         phone: "",
         roleID:"1",
         roleTag: "Student",
+        gurdian_name: "",
+        gurdian_address:"",
+        gurdian_phone: "",
+
+
 
     })
     return(
@@ -132,6 +137,42 @@ function Register() {
                                 } }
                             />
                             <label for="phone">Phone Number</label>
+                        </div>
+                        <div className="form-floating my-3">
+                            <input 
+                                type="text" 
+                                className="form-control"  
+                                id="gurdian"
+                                onChange={(event)=> {                                    
+                                    const value = event.target.value;
+                                    setRegisterState({...RegisterState,gurdian_name:value})
+                                } }
+                            />
+                            <label for="gurdian">gurdian name</label>
+                        </div>
+                        <div className="form-floating my-3">
+                            <input 
+                                type="text" 
+                                className="form-control"  
+                                id="gurdian_address"
+                                onChange={(event)=> {                                    
+                                    const value = event.target.value;
+                                    setRegisterState({...RegisterState,gurdian_adress:value})
+                                } }
+                            />
+                            <label for="gurdian_address">gurdian address</label>
+                        </div>
+                        <div className="form-floating my-3">
+                            <input 
+                                type="number" 
+                                className="form-control"  
+                                id="gurdian_phone"
+                                onChange={(event)=> {                                    
+                                    const value = event.target.value;
+                                    setRegisterState({...RegisterState,gurdian_phone:value})
+                                } }
+                            />
+                            <label for="gurdian_phone">gurdian phone</label>
                         </div>
                     </div>
                 </div>
