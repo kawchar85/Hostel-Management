@@ -10,6 +10,7 @@ function Register() {
     const [RegisterState, setRegisterState] = useState({
         reg: "",
         std_name: "",
+        password: "",
         dept: "",
         merit: "",
         email: "",
@@ -18,15 +19,16 @@ function Register() {
         phone: "",
         roleID:"1",
         roleTag: "Student",
-        gurdian_name: "",
-        gurdian_address:"",
-        gurdian_phone: "",
+        guardian_name: "",
+        guardian_address:"",
+        guardian_phone: "",
     });
 
     const addStudent =()=> {
         Axios.post("http://localhost:3001/add/students/auto", {
             "reg":RegisterState.reg,
             "name":RegisterState.std_name,
+            "password":RegisterState.password,
             "dept": RegisterState.dept,
             "merit": RegisterState.merit,
             "email": RegisterState.email,
@@ -35,9 +37,9 @@ function Register() {
             "phone": RegisterState.phone,
             "roleID":RegisterState.roleID,
             "roleTag": RegisterState.roleTag,
-            "gurdian_name": RegisterState.gurdian_name,
-            "gurdian_address":RegisterState.gurdian_address,
-            "gurdian_phone": RegisterState.gurdian_phone
+            "guardian_name": RegisterState.guardian_name,
+            "guardian_address":RegisterState.guardian_address,
+            "guardian_phone": RegisterState.guardian_phone
         }).then(()=> {
             console.log("yeeeee kaj korche")
         } );
@@ -61,6 +63,18 @@ function Register() {
                                 } }
                             />
                             <label for="reg">Registration Number</label>
+                        </div>
+                        <div className="form-floating my-3">
+                            <input 
+                                type="text" 
+                                className="form-control"  
+                                id="pass"
+                                onChange={(event)=> {                                    
+                                    const value = event.target.value;
+                                    setRegisterState({...RegisterState,password:value})
+                                } }
+                            />
+                            <label for="pass">Password</label>
                         </div>
                         <div className="form-floating my-3">
                             <input 
@@ -164,10 +178,10 @@ function Register() {
                                 id="gurdian"
                                 onChange={(event)=> {                                    
                                     const value = event.target.value;
-                                    setRegisterState({...RegisterState,gurdian_name:value})
+                                    setRegisterState({...RegisterState,guardian_name:value})
                                 } }
                             />
-                            <label for="gurdian">gurdian name</label>
+                            <label for="gurdian">guardian name</label>
                         </div>
                         <div className="form-floating my-3">
                             <input 
@@ -176,10 +190,10 @@ function Register() {
                                 id="gurdian_address"
                                 onChange={(event)=> {                                    
                                     const value = event.target.value;
-                                    setRegisterState({...RegisterState,gurdian_adress:value})
+                                    setRegisterState({...RegisterState,guardian_address:value})
                                 } }
                             />
-                            <label for="gurdian_address">gurdian address</label>
+                            <label for="gurdian_address">guardian address</label>
                         </div>
                         <div className="form-floating my-3">
                             <input 
@@ -188,10 +202,10 @@ function Register() {
                                 id="gurdian_phone"
                                 onChange={(event)=> {                                    
                                     const value = event.target.value;
-                                    setRegisterState({...RegisterState,gurdian_phone:value})
+                                    setRegisterState({...RegisterState,guardian_phone:value})
                                 } }
                             />
-                            <label for="gurdian_phone">gurdian phone</label>
+                            <label for="gurdian_phone">guardian phone</label>
                         </div>
                         <button 
                                 type="submit" 

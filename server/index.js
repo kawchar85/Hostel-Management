@@ -149,6 +149,7 @@ app.post("/add/students/auto" , (req, res) => {
 
     const reg=data.reg;
     const name = data.name;
+    const password = data.password;
     const dept = data.dept;
     const merit = data.merit;
     const email = data.email;
@@ -158,8 +159,8 @@ app.post("/add/students/auto" , (req, res) => {
     const roleID = data.roleID;
     const roleTag = data.roleTag;
     const guardian_name = data.guardian_name;
-    const gurdian_address = data.gurdian_address;
-    const gurdian_phone = data.gurdian_phone;
+    const guardian_address = data.guardian_address;
+    const guardian_phone = data.guardian_phone;
     db.query("INSERT INTO students(Reg,Name,Dept,Merit,Email,Hostel_ID,RoomID,Phone,Role_ID) VALUES (?,?,?,?,?,?,?,?,?)",
     [reg,name,dept,merit,email,hostelID,roomID,phone,roleID],
     (err, result) => {
@@ -167,10 +168,34 @@ app.post("/add/students/auto" , (req, res) => {
             console.log(err);
         } else {
             console.log(result);
-            res.status(201).json({"messege":"hi bro"});
+            res.status(201).json({"messege":"it worked"});
         }
     }
     );
+    db.query("INSERT INTO guardian(Std_reg,Phone) VALUES (?,?)",
+    [reg,guardian_phone],
+    (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+            res.status(201).json({"messege":"it worked"});
+        }
+    }
+    );
+    db.query("INSERT INTO guardian_info(Phone,Name,Address) VALUES (?,?,?)",
+    [guardian_phone,guardian_name,guardian_address],
+    (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+            res.status(201).json({"messege":"it worked"});
+        }
+    }
+    );
+    
+    
 
 } );
 
