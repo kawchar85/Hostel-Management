@@ -2,18 +2,18 @@ import React, { useState, useContext } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import Axios from 'axios';
 
-import { PublicContex } from './PublicContext';
+//import { PublicContex } from './PublicContext';
 
 export default function AddHostel() {
-    const [publicData, setPublicData] = useContext(PublicContex);
+    //const [publicData, setPublicData] = useContext(PublicContex);
     const [show, setShow] = useState(false);
 
-    console.log(publicData.hostel);
-    let id = 1 + publicData.hostel.length;
-    const id2 = 1 + publicData.hostel.length;
-    console.log(id + " " + id2);
+//     console.log(publicData.hostel);
+//     let id = 1 + publicData.hostel.length;
+//     const id2 = 1 + publicData.hostel.length;
+//     console.log(id + " " + id2);
     const [hostel, setHostel] = useState({
-        id: id,
+        id: "-1",
         type: "",
         name: "",
         address: "",
@@ -34,8 +34,8 @@ export default function AddHostel() {
         //setShow(true);
         console.log("now in handlesubmit");
         event.preventDefault();
-        const value = 1 + publicData.hostel.length;
-        setHostel({ ...hostel, id: value });
+//         const value = 1 + publicData.hostel.length;
+//         setHostel({ ...hostel, id: value });
 
         //check erro?
         const isEmpty = Object.values(error).every(x => x === null || x === "");
