@@ -1,0 +1,89 @@
+#admin .main {
+    display: flex;
+    height: 92.5vh;
+    margin-top: 0;
+}
+
+#admin .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background-color: rgb(33 37 41);
+    height: 100%;
+    overflow: auto;
+}
+
+
+#admin .sidebar-item {
+    padding: .75em 1em;
+    display: block;
+    transition: background-color .15s;
+    border-radius: 5px;
+}
+
+#admin .sidebar-item:hover {
+    background-color: rgba(129, 129, 129, 0.1);
+}
+
+#admin .sidebar-title {
+    display: flex;
+    font-size: 1.2em;
+    justify-content: space-between;
+    color: #fff;
+}
+
+#admin .sidebar-title span i {
+    display: inline-block;
+    width: 1.5em;
+}
+
+#admin .sidebar-title .toggle-btn {
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+#admin .sidebar-item.open>.sidebar-title .toggle-btn {
+    transform: rotate(180deg);
+}
+
+#admin .sidebar-content {
+    padding-top: .25em;
+    height: 0;
+    overflow: hidden;
+}
+
+#admin .sidebar-item.open>.sidebar-content {
+    height: auto;
+}
+
+#admin .sidebar-item.plain {
+    color: #fff;
+    text-decoration: none;
+}
+
+#admin .sidebar-item.plain:hover {
+    text-decoration: underline;
+}
+
+#admin .sidebar-item.plain i {
+    display: inline-block;
+    width: 1.7em;
+}
+#admin .container {
+    padding: 2em;
+}
+
+#admin .mybtn {
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    padding: .75em 1em;
+    font-size: 1em;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, .4);
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 3px;
+    background-color: rgb(34 129 12);
+    color: #fff;
+}
+

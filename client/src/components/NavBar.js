@@ -91,7 +91,6 @@ export default function NavBar(props) {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <br />
 
         </div>
     )

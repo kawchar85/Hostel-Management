@@ -2,8 +2,12 @@
 
 
 import React, { useState } from 'react'
-import { Form, Collapse, Button } from 'react-bootstrap';
 import Axios from 'axios';
+import AdministrationSidebar from './AdministrationSidebar';
+
+import '../index.css';
+import { useSearchParams } from 'react-router-dom';
+import AddHostel from './AddHostel';
 
 export default function Administration() {
 
@@ -19,7 +23,9 @@ export default function Administration() {
     const [password, setPassword] = useState("");
 
 
-    const addStudentInfo = () => {
+    const [query, setQuery] = useSearchParams();
+
+    function addStudentInfo() {
         Axios.post("http://localhost:3001/add/students", {
             name: name,
             reg: reg,
@@ -30,7 +36,6 @@ export default function Administration() {
             hostel_id: hostel_id,
             room_id: room_id,
             role_id: 2,
-
         }).then(() => {
             alert("student added");
             console.log("std added");
@@ -40,7 +45,6 @@ export default function Administration() {
             email: email,
             role_id: 2,
             password: password,
-
         }).then(() => {
             alert("login info added");
             console.log("login added");
@@ -63,103 +67,29 @@ export default function Administration() {
         Axios.delete(`http://localhost:3001/delete/students/${reg}`).then(() => {
             console.log("std deleted");
         });
-};
+    };
 
-return (
-    <div className='m-2' >
-        
-        Add Student?
-        <div>
-            <form >
-                <div>
-                    <label>Reg:</label>
-                    <input
-                        type="number"
-                        onChange={(event) => {
-                            setReg(event.target.value);
-                        }}
-                        required
-                    />
-                </div>
-                <br />
-                <div>
-                    <label>Name:</label>
-                    <input
-                        type="text"
-                        onChange={(event) => {
-                            setName(event.target.value);
-                        }}
-                        required
-                    />
-                </div>
+    const myStyle = {
+        align: "center",
+        marginLeft: "auto",
+        marginRight: "auto"
+    }
 
-                <br />
-                <div>
-                    <label>Dept:</label>
-                    <input
-                        type="text"
-                        onChange={(event) => {
-                            setDept(event.target.value);
-                        }}
-                        required
-                    />
-                </div>
+    //will send current users' role id in sidebar
+    return (
+        <div id="admin">
+            <div className="main">
+                <AdministrationSidebar />
+                <div className="container">
+                    <div style={myStyle} >
+                    <h2>{query.get("action")}  {query.get("section")}</h2>
+                    </div>
 
-                <br />
-                <div>
-                    <label>Merit:</label>
-                    <input
-                        type="number"
-                        onChange={(event) => {
-                            setMerit(event.target.value);
-                        }}
-                        required
-                    />
-                </div>
+                    <AddHostel />
 
-                <br />
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        onChange={(event) => {
-                            setEmail(event.target.value);
-                        }}
-                        required
-                    />
-                </div>
-                <br />
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        onChange={(event) => {
-                            setPassword(event.target.value);
-                        }}
-                        required
-                    />
-                </div>
 
-                <br />
-                <div>
-                    <label>Phone:</label>
-                    <input
-                        type="phone"
-                        onChange={(event) => {
-                            setPhone(event.target.value);
-                        }}
-                        required
-                    />
                 </div>
-                <br />
-                <div>
-
-                    <button type="submit" onClick={addStudentInfo}>Add</button>
-                </div>
-            </form>
-
+            </div>
         </div>
-
-    </div>
-);
+    );
 }

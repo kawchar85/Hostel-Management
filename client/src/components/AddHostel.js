@@ -8,10 +8,6 @@ export default function AddHostel() {
     //const [publicData, setPublicData] = useContext(PublicContex);
     const [show, setShow] = useState(false);
 
-//     console.log(publicData.hostel);
-//     let id = 1 + publicData.hostel.length;
-//     const id2 = 1 + publicData.hostel.length;
-//     console.log(id + " " + id2);
     const [hostel, setHostel] = useState({
         id: "-1",
         type: "",
@@ -31,7 +27,7 @@ export default function AddHostel() {
     })
 
     const handleSubmit = (event) => {
-        //setShow(true);
+
         console.log("now in handlesubmit");
         event.preventDefault();
 //         const value = 1 + publicData.hostel.length;
@@ -59,6 +55,8 @@ export default function AddHostel() {
 
     };
 
+    //hostel ID auto increment hobe.
+    //1+hostelListArray readOnly dewa takbe
     return (
         <>
         <div className="shadow p-4" style={{
@@ -84,7 +82,7 @@ export default function AddHostel() {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="hostelID">
                         <Form.Label>Hostel ID</Form.Label>
-                        <Form.Control type="number" value={1 + publicData.hostel.length} onChange={(event) => {
+                        <Form.Control type="number" value={420} onChange={(event) => {
                             const value = event.target.value;
                             setHostel({ ...hostel, id: value });
                         }} readOnly />
