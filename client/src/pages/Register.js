@@ -25,24 +25,40 @@ function Register() {
     });
 
     const addStudent =()=> {
-        Axios.post("http://localhost:3001/add/students/auto", {
+        
+        Axios.post("http://localhost:3001/add/students", {
             "reg":RegisterState.reg,
             "name":RegisterState.std_name,
-            "password":RegisterState.password,
             "dept": RegisterState.dept,
             "merit": RegisterState.merit,
             "email": RegisterState.email,
-            "hostelID": RegisterState.hostelID,
-            "roomID": RegisterState.roomID,
+            "hostel_id": RegisterState.hostelID,
+            "room_id": RegisterState.roomID,
             "phone": RegisterState.phone,
-            "roleID":RegisterState.roleID,
-            "roleTag": RegisterState.roleTag,
-            "guardian_name": RegisterState.guardian_name,
-            "guardian_address":RegisterState.guardian_address,
-            "guardian_phone": RegisterState.guardian_phone
+            "role_id":RegisterState.roleID
         }).then(()=> {
             console.log("yeeeee kaj korche")
         } );
+        Axios.post("http://localhost:3001/add/guardian_info", {
+            "name": RegisterState.guardian_name,
+            "address":RegisterState.guardian_address,
+            "phone": RegisterState.guardian_phone
+        }).then(()=> {
+            console.log("yeeeee kaj korche")
+        } ); 
+        Axios.post("http://localhost:3001/add/guardian", {
+            "std_reg":RegisterState.reg,
+            "phone": RegisterState.guardian_phone
+        }).then(()=> {
+            console.log("yeeeee kaj korche")
+        } );
+        Axios.post("http://localhost:3001/add/login", {
+            "password":RegisterState.password,
+            "role_id": RegisterState.roleID,
+            "email": RegisterState.email
+        }).then(()=> {
+            console.log("yeeeee kaj korche")
+        } ); 
     };
 
     return(

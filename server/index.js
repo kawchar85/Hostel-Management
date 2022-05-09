@@ -29,7 +29,7 @@ app.post("/add/students", (req, res) => {
     console.log(data);
 
     db.query(
-        "INSERT INTO students (reg, name, dept, merit, email, hostel_id,room_id,phone, role_id) VALUES (?,?,?,?,?,?,?,?,?)",
+        "INSERT INTO students (reg, name, dept, merit, email, hostel_id,roomid,phone, role_id) VALUES (?,?,?,?,?,?,?,?,?)",
         [reg, name, dept, merit, email, hostel_id, room_id, phone, role_id],
         (err, result) => {
             if (err) {
@@ -49,7 +49,7 @@ app.post("/add/login", (req, res) => {
 
     console.log("login adding");
     db.query(
-        "INSERT INTO login (email, role_id, password) VALUES (?,?,?)",
+        "INSERT INTO login (email, roleid, password) VALUES (?,?,?)",
         [email, role_id, password],
         (err, result) => {
             if (err) {
@@ -62,7 +62,7 @@ app.post("/add/login", (req, res) => {
 });
 app.post("/add/guardian", (req, res) => {
     const data = req.body;
-    const std_reg = data.ste_reg;
+    const std_reg = data.std_reg;
     const phone = data.phone;
 
     db.query(
@@ -147,60 +147,6 @@ app.post("/add/hostel", (req, res) => {
     );
 });
 
-app.post("/add/students/auto", (req, res) => {
-    const data = req.body;
-
-    const reg = data.reg;
-    const name = data.name;
-    const password = data.password;
-    const dept = data.dept;
-    const merit = data.merit;
-    const email = data.email;
-    const hostelID = data.hostelID;
-    const roomID = data.roomID;
-    const phone = data.phone;
-    const roleID = data.roleID;
-    const roleTag = data.roleTag;
-    const guardian_name = data.guardian_name;
-    const guardian_address = data.guardian_address;
-    const guardian_phone = data.guardian_phone;
-    db.query("INSERT INTO students(Reg,Name,Dept,Merit,Email,Hostel_ID,RoomID,Phone,Role_ID) VALUES (?,?,?,?,?,?,?,?,?)",
-        [reg, name, dept, merit, email, hostelID, roomID, phone, roleID],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(result);
-                res.status(201).json({ "messege": "it worked" });
-            }
-        }
-    );
-    db.query("INSERT INTO guardian(Std_reg,Phone) VALUES (?,?)",
-        [reg, guardian_phone],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(result);
-                res.status(201).json({ "messege": "it worked" });
-            }
-        }
-    );
-    db.query("INSERT INTO guardian_info(Phone,Name,Address) VALUES (?,?,?)",
-        [guardian_phone, guardian_name, guardian_address],
-        (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(result);
-                res.status(201).json({ "messege": "it worked" });
-            }
-        }
-    );
-
-
-
-});
 
 
 /*
@@ -221,6 +167,25 @@ app.post("/add/", (req, res) => {
         }
     );
 }); */
+
+app.get("/loginCred",(req,res) =>{
+    let table = req.query.table;
+    let email= req.query.email;
+    console.log('preityyyy');
+
+    db.query( `SELECT * FROM ${table} where email=${email}`,
+    (err, result) => {
+        if (err) {
+            console.log(err);
+            console.log("login info ashe nai");
+        } else {
+            console.log(result);
+            res.send(result);
+        }
+    } )
+} );
+
+
 app.get("/hostel", (req, res) => {
     db.query("SELECT * FROM hostel", (err, result) => {
         if (err) {
@@ -267,6 +232,7 @@ app.delete("/delete/students/:reg", (req, res) => {
 
 app.get("/getData", (req, res) => {
     //why auto refreshing?
+    // koi kila use korsos bujhram na, preventDefault() use korte paros, kichu component or default behaviour oilo refresh kora
     console.log("now in get Data");
     let table = req.query.table;
     //console.log(req);

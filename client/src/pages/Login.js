@@ -2,6 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React from "react";
 import {useState} from "react";
+import Axios from 'axios';
 import { Container } from 'react-bootstrap';
 
 function Login() {
@@ -10,7 +11,18 @@ function Login() {
         password: "",
         ck: false,
 
-    })
+    });
+    const auth =()=> {
+        
+        Axios.get("http://localhost:3001/loginCred", {
+            params: { table: "login", email:"'"+LoginState.email+"'" },
+            
+            
+        }).then((response)=> {
+            console.log("yeeeee loginer kaj korche")
+            console.log(response.data);
+        } );
+    }
     return(
         <Container className="my-5">
             <div className="container">
@@ -63,6 +75,7 @@ function Login() {
                                 type="submit" 
                                 className="btn btn-primary"
                                 disabled= {!LoginState.email || !LoginState.password}
+                                onClick={auth}
                             >
                                 Submit
                             </button>
