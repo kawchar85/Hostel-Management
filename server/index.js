@@ -47,7 +47,6 @@ app.post("/add/login", (req, res) => {
     const role_id = data.role_id;
     const email = data.email;
 
-    console.log("login adding");
     db.query(
         "INSERT INTO login (email, roleid, password) VALUES (?,?,?)",
         [email, role_id, password],

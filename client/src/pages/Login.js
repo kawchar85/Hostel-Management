@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from "react";
 import {useState} from "react";
 import Axios from 'axios';
-import { Container } from 'react-bootstrap';
+import { Alert, Container } from 'react-bootstrap';
 
 function Login() {
     const [LoginState, setLoginState] = useState({
@@ -19,8 +19,26 @@ function Login() {
             
             
         }).then((response)=> {
-            console.log("yeeeee loginer kaj korche")
-            console.log(response.data);
+            console.log("yeeeee loginer kaj korche");
+            const len = response.data.length;
+            if(len==0) {
+                alert("Invalid Email");
+            }
+            else 
+            {
+                console.log(response.data[0]);
+                const {Email,RoleID,Password} = response.data[0];
+                console.log(Email);
+                if(LoginState.password == Password) {
+                    alert("Login successful");
+                }
+                else 
+                {
+                    alert("Wrong Password");
+                }
+            }
+            
+            
         } );
     }
     return(
