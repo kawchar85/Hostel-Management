@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const cryptoval = 10;
+const jwt = require("jsonwebtoken");
 
 app.use(cors());
 app.use(express.json());
@@ -47,17 +50,24 @@ app.post("/add/login", (req, res) => {
     const role_id = data.role_id;
     const email = data.email;
 
-    db.query(
+    console.log(data);
+    bcrypt.hash(password, cryptoval, (err,hash)=>{
+        if(err) {
+            console.log(err);
+        }
+        db.query(
         "INSERT INTO login (email, roleid, password) VALUES (?,?,?)",
-        [email, role_id, password],
+        [email, role_id, hash],
         (err, result) => {
             if (err) {
                 console.log(err);
             } else {
                 res.send("login data Inserted");
             }
-        }
-    );
+        });
+    })
+
+    
 });
 app.post("/add/guardian", (req, res) => {
     const data = req.body;
@@ -167,6 +177,89 @@ app.post("/add/", (req, res) => {
     );
 }); */
 
+
+app.post("/authMail",(req,res) =>{
+    const data = req.body;
+    const email= data.email;
+    console.log(email);
+
+    db.query(
+        "SELECT * FROM login WHERE Email=?",
+        [email],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else if(result.length > 0){
+                 
+                res.send(result);
+            }
+            else {
+                res.send({messege: "Invalid Email!"});
+            }
+        }
+    );
+});
+
+
+app.post("/auth",(req,res) =>{
+    const data = req.body;
+    const email= data.email;
+    const password = data.password;
+    console.log(email);
+
+    db.query(
+        "SELECT * FROM login WHERE Email=?",
+        [email],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                bcrypt.compare(password,result[0].Password,(err, response)=> {
+                    console.log(result);
+                    if(response)
+                    {
+                        const id = result[0].Email;
+                        console.log("hiii" + id);
+                        const token = jwt.sign({id}, "jwtSecret", {
+                            expiresIn:3000,
+                        } );
+                        res.json({auth: true, token: token, result: result}); 
+                    } 
+                    else res.send({messege: "Wrong password"});
+                })
+                
+            }
+        }
+    );
+});
+
+const verifyJWT =(req, res, next) => {
+    const token = req.headers["x-access-token"];
+    if(!token)
+    {
+        res.send("NO TOKEN HERE inside verifyJWT");
+    }
+    else {
+        jwt.verify(token, "jwtSecret", (err, decoder) => {
+            if(err) {
+                res.json({auth : false, messege: "NO AUTH, token bhul lage"});
+            }
+            else {
+                req.userID = jwt.decode.id;
+                next();
+            }
+        })
+    }
+}
+
+
+app.get('/isAuth', verifyJWT , (req,res) => {
+    res.send("AUthenticated buddy");
+});
+
+
+/*
 app.get("/loginCred",(req,res) =>{
     let table = req.query.table;
     let email= req.query.email;
@@ -183,6 +276,7 @@ app.get("/loginCred",(req,res) =>{
         }
     } )
 } );
+*/
 
 
 app.get("/hostel", (req, res) => {

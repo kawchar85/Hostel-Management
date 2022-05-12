@@ -4,6 +4,7 @@ import React from "react";
 import {useState} from "react";
 import Axios from 'axios';
 import { Alert, Container } from 'react-bootstrap';
+import axios from 'axios';
 
 function Login() {
     const [LoginState, setLoginState] = useState({
@@ -12,6 +13,9 @@ function Login() {
         ck: false,
 
     });
+    const[LoginStatus, setLoginStatus] = useState(false);
+    
+/*
     const auth =()=> {
         
         Axios.get("http://localhost:3001/loginCred", {
@@ -41,6 +45,51 @@ function Login() {
             
         } );
     }
+    */
+   const demoMethod =()=>{
+        Axios.get("http://localhost:3001/isAuth",{
+            "headers" : {
+                "x-access-token": localStorage.getItem("token"),
+            },
+        }).then((response)=>{
+            console.log(response);
+        });
+   };
+
+
+    const auth =() => {
+        Axios.post("http://localhost:3001/authMail", {
+            "email":LoginState.email,
+        }).then((response)=> {
+            console.log(response);
+            if(response.data.length > 0)
+            {
+                Axios.post("http://localhost:3001/auth", {
+                    "email":LoginState.email,
+                    "password":LoginState.password
+                }).then((response)=> {
+                    if(response.data.result.length > 0)
+                    {
+                        setLoginStatus(true);
+                        localStorage.setItem("token",response.data.token);
+                       // alert(response.data.token);
+                        alert("Logged in!");
+                    }
+                    else
+                    {
+                        alert("Wrong password!");
+                        setLoginStatus(false);
+                    } 
+                });
+            }
+            else 
+            {
+                setLoginStatus(false);
+                alert("Invalid mail address");
+            }
+        });
+    }
+
     return(
         <Container className="my-5">
             <div className="container">
@@ -97,6 +146,7 @@ function Login() {
                             >
                                 Submit
                             </button>
+                            {LoginStatus && <button onClick={demoMethod}>demo check</button>}
                         </div>
                         <p className="forgot-password text-right my-4">
                             <a href="#">Forgot password?</a>
