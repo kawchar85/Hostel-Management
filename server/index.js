@@ -29,6 +29,7 @@ app.post("/add/students", (req, res) => {
     const email = data.email;
 
     console.log("std adding");
+    alert("helloooo");
     console.log(data);
 
     db.query(
@@ -107,6 +108,7 @@ app.post("/add/guardian_info", (req, res) => {
 });
 app.post("/add/administration", (req, res) => {
     const data = req.body;
+    console.log(data);
 
     const phone = data.phone;
     const email = data.email;

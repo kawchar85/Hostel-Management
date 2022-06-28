@@ -12,6 +12,7 @@ import Error from "./components/Error";
 import Room from "./components/Room";
 import Administration from "./components/Administration";
 import StudentHome from "./components/StudentHome";
+import AdminReg from "./components/AdminReg";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/adminreg" element={<AdminReg />} />
           <Route path="/hostel/:hostelId/room/:roomId" element={<Room />} />
           <Route path="/administration" element={<Administration />} />
           <Route path="/studenthome" element={<StudentHome />} />
