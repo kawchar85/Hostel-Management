@@ -77,7 +77,7 @@ export default function Administration() {
 
     //will send current users' role id in sidebar
     return (
-        <div id="admin">
+        <div id="side">
             <div className="main">
                 <AdministrationSidebar />
                 <div className="container">
