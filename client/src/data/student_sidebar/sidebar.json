@@ -1,0 +1,33 @@
+[
+    {
+        "title": "Profile",
+        "priority": 1,
+        "path": "#"
+    },
+    {
+        "title": "Complain",
+        "priority": 1,
+        "path": "#"
+    },
+    {
+        "title": "Hostel info",
+        "priority": 1,
+        "path": "#"
+    },
+    {
+        "title": "Swap Request",
+        "priority": 1,
+        "path": "#"
+    },
+    {
+        "title": "Apply Room",
+        "priority": 1,
+        "path": "#"
+    },
+    {
+        "title": "Cancel Seat",
+        "priority": 1,
+        "path": "#"
+    }
+
+]

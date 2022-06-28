@@ -11,6 +11,7 @@ import Signup from "./components/Signup";
 import Error from "./components/Error";
 import Room from "./components/Room";
 import Administration from "./components/Administration";
+import StudentHome from "./components/StudentHome";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/hostel/:hostelId/room/:roomId" element={<Room />} />
           <Route path="/administration" element={<Administration />} />
+          <Route path="/studenthome" element={<StudentHome />} />
 
 
           <Route path="*" element={<Error />} />

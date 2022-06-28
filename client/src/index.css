@@ -87,3 +87,10 @@
     color: #fff;
 }
 
+
+
+#student .main {
+    display: flex;
+    height: 100vh;
+}
+
