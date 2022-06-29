@@ -7,7 +7,7 @@
     {
         "title": "Complain",
         "priority": 1,
-        "path": "#"
+        "path": "http://localhost:3000/complain"
     },
     {
         "title": "Hostel info",

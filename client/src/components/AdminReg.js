@@ -26,10 +26,8 @@ export default function AdminReg () {
     const addAdmin =()=> {
         console.log("now in handlesubmit");
         const isEmpty = Object.values(error).every(x => x === null || x === "");
-        console.log(isEmpty);
-        
-        
-        Axios.post("http://localhost:3001/add/administration", {
+        if(isEmpty) {
+            Axios.post("http://localhost:3001/add/administration", {
             "name":admin.name,
             "phone":admin.phone,
             "email":admin.email,
@@ -42,6 +40,8 @@ export default function AdminReg () {
             alert("baal");
             console.log("hoilona");
         });
+        }
+        else alert("No field can remain empty");
     };
 
     return(
@@ -165,6 +165,9 @@ export default function AdminReg () {
         <Button variant="primary" type="submit" onClick={addAdmin}>
                         Submit
                     </Button>
+                    <p className="text-right my-4">
+                                <a href="http://localhost:3000/Signup">Not an admin??</a>
+                            </p>
 
         </div>
 

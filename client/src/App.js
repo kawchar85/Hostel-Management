@@ -13,6 +13,8 @@ import Room from "./components/Room";
 import Administration from "./components/Administration";
 import StudentHome from "./components/StudentHome";
 import AdminReg from "./components/AdminReg";
+import ForgotPass from "./components/ForgotPass";
+import Complain from "./components/Complain";
 
 
 function App() {
@@ -36,7 +38,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/complain" element={<Complain />} />
           <Route path="/adminreg" element={<AdminReg />} />
+          <Route path="/forgotpass" element={<ForgotPass/>} />
           <Route path="/hostel/:hostelId/room/:roomId" element={<Room />} />
           <Route path="/administration" element={<Administration />} />
           <Route path="/studenthome" element={<StudentHome />} />

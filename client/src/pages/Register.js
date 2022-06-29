@@ -230,6 +230,9 @@ function Register() {
                             >
                                 Submit
                             </button>
+                            <p className="text-right my-4">
+                                <a href="http://localhost:3000/AdminReg">Not a student??</a>
+                            </p>
                     </div>
                 </div>
             </div>

@@ -149,8 +149,9 @@ function Login() {
                             {LoginStatus && <button onClick={demoMethod}>demo check</button>}
                         </div>
                         <p className="forgot-password text-right my-4">
-                            <a href="#">Forgot password?</a>
-                        </p>    
+                            <a href="http://localhost:3000/forgotpass">Forgot password?</a>
+                        </p> 
+                           
                     </div>
                 </div>
             </div>

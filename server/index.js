@@ -130,6 +130,29 @@ app.post("/add/administration", (req, res) => {
     );
 });
 
+app.post("/add/complain",(req,res)=>{
+    const data = req.body;
+    const datetime = data.timestamp;
+    const std_reg = data.std_reg;
+    const tag = data.tag;
+    const image= data.photo;
+    const description = data.description;
+    db.query(
+        "INSERT INTO complains (datetime, std_reg, tag, image, description) VALUES (?,?,?,?,?)",
+        [datetime,std_reg, tag, image, description],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                console.log("complain errrr");
+            } else {
+                console.log(result);
+                res.send(result);
+            }
+        }
+    );
+
+});
+
 app.post("/add/hostel", (req, res) => {
     const data = req.body;
 
