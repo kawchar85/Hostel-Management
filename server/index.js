@@ -29,7 +29,7 @@ app.post("/add/students", (req, res) => {
     const email = data.email;
 
     console.log("std adding");
-    alert("helloooo");
+   // alert("helloooo");
     console.log(data);
 
     db.query(

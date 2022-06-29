@@ -28,6 +28,7 @@ export default function AdminReg () {
         const isEmpty = Object.values(error).every(x => x === null || x === "");
         console.log(isEmpty);
         
+        
         Axios.post("http://localhost:3001/add/administration", {
             "name":admin.name,
             "phone":admin.phone,
@@ -45,6 +46,7 @@ export default function AdminReg () {
 
     return(
         <>
+        {JSON.stringify(admin)}
         <div className="shadow p-4" style={{
             width: "60%",
             border: "3px solid lightGray",
@@ -60,7 +62,7 @@ export default function AdminReg () {
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" placeholder="Name" onChange={(event) => {
                 const value = event.target.value;
-                setAdmin({ ...admin, Name: value });
+                setAdmin({ ...admin, name: value });
                 let msg = "";
                 if (value.length === 0)
                     msg = "* field is required";
@@ -75,7 +77,7 @@ export default function AdminReg () {
             <Form.Label>Contact</Form.Label>
             <Form.Control type="tel" placeholder="Contact number: 01...." onChange={(event) => {
             const value = event.target.value;
-         //   setHostel({ ...hostel, contact: value });
+            setAdmin({ ...admin, phone: value });
             let msg = "";
             const regex = /^[0][1][0-9]{9}$/i;
             if (value.length === 0)
@@ -93,7 +95,7 @@ export default function AdminReg () {
             <Form.Label>Contact</Form.Label>
             <Form.Control type="email" placeholder="example@something.com" onChange={(event) => {
             const value = event.target.value;
-         //   setHostel({ ...hostel, contact: value });
+            setAdmin({ ...admin, email: value });
             let msg = "";
     
             if (value.length === 0)
@@ -111,7 +113,7 @@ export default function AdminReg () {
             <Form.Label>Hostel</Form.Label>
             <Form.Select onChange={(event) => {
             const value = event.currentTarget.value;
-            //                setHostel({ ...hostel, type: value })
+            setAdmin({ ...admin, hostel_id: value })
             let msg = "";
             if (value.length === 0)
             msg = "* field is required";
@@ -128,7 +130,7 @@ export default function AdminReg () {
             <Form.Label>Designation</Form.Label>
             <Form.Select onChange={(event) => {
             const value = event.currentTarget.value;
-            //                setHostel({ ...hostel, type: value })
+            setAdmin({ ...admin, designation: value })
             let msg = "";
             if (value.length === 0)
             msg = "* field is required";
@@ -145,7 +147,7 @@ export default function AdminReg () {
             <Form.Label>Role</Form.Label>
             <Form.Select onChange={(event) => {
             const value = event.currentTarget.value;
-            //                setHostel({ ...hostel, type: value })
+            setAdmin({ ...admin, role_id: value })
             let msg = "";
             if (value.length === 0)
             msg = "* field is required";
