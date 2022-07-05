@@ -5,6 +5,8 @@ import Axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../index.css';
 import StudentSidebar from './StudentSidebar'
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from './firebase';
 
 
 export default function Complain() {
@@ -19,29 +21,39 @@ export default function Complain() {
     const [complain, setComplain] = useState({
         tag:0,
         description:"",
-        photo:null,
         timestamp:"",
+        photo:"",
         std_reg:"2018331008"
 
-    })
+    });
+    const [files, setFiles] = useState([]);
 
-    const handleSubmit=(event)=> {
+
+    const uploadImage = () => {
+        if (files.length !== 0) {
+          const imageRef = ref(storage, `banner/${Date.now()}`);
+          uploadBytes(imageRef, files).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then(async (url) => {
+            console.log(url);
+            complain.photo=url;
+            console.log(complain.photo);
+    
+             
+            });
+          });
+        } else return;
+
         console.log("kaj korche");
-        const tm= new Date();
+        const tm= Date.now();
         console.log(tm);
-        setComplain({...complain,timestamp: tm});
-
-        const fd= new FormData();
-        fd.append('image',~null,complain.photo.name);
-
-
+    
         
         if(complain.photo != null) {
             Axios.post("http://localhost:3001/add/complain", {
             "tag":complain.tag,
             "description":complain.description,
-            "photo":fd,
-            "timestamp":complain.timestamp,
+            "photo":complain.photo,
+            "timestamp":tm,
             "std_reg":complain.std_reg,
         }).then( ()=> {
             console.log("look it works!!");
@@ -50,11 +62,11 @@ export default function Complain() {
             console.log("hoilona");
         });
         }
-        else alert(complain.photo);
+        else alert("select imag!");
 
 
+      };
 
-    }
 
     return(
         <>
@@ -101,15 +113,14 @@ export default function Complain() {
                     </Form.Group>
 
                     <input className="mb-3" type="file" fileName="complainPhoto" onChange={(event)=>{
-                        // value = event.target.files[0];
-                        setComplain({...complain, photo:event.target.files[0]});
-                        console.log(complain.photo.name);
+                        event.preventDefault();
+                        setFiles(event.target.files[0]);
                     }}/>
 
                     
                 
             
-            </Form><Button variant="primary" type="submit" onClick={handleSubmit}>
+            </Form><Button variant="primary" type="submit" onClick={uploadImage}>
                         Submit
                     </Button>
         
