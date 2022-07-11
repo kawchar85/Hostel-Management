@@ -8,6 +8,7 @@ import AdministrationSidebar from './AdministrationSidebar';
 import '../index.css';
 import { useSearchParams } from 'react-router-dom';
 import AddHostel from './AddHostel';
+import RemoveHostel from './RemoveHostel';
 
 export default function Administration() {
 
@@ -85,7 +86,7 @@ export default function Administration() {
                     <h2>{query.get("action")}  {query.get("section")}</h2>
                     </div>
 
-                    <AddHostel />
+                    <RemoveHostel />
 
 
                 </div>

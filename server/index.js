@@ -347,10 +347,20 @@ app.delete("/delete/students/:reg", (req, res) => {
         }
     });
 });
+app.delete("/delete/hostel/:id", (req, res) => {
+    const id = req.params.id;
+    db.query("DELETE FROM hostel WHERE Hostel_ID = ?", id, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log("hostel deleted");
+            res.send("ok");
+        }
+    });
+});
 
 app.get("/getData", (req, res) => {
-    //why auto refreshing?
-    // koi kila use korsos bujhram na, preventDefault() use korte paros, kichu component or default behaviour oilo refresh kora
     console.log("now in get Data");
     let table = req.query.table;
     //console.log(req);
@@ -364,10 +374,24 @@ app.get("/getData", (req, res) => {
         }
     });
 });
-
+app.get("/getData/hostel", (req, res) => {
+    let id = req.query.hostel_id;
+    db.query(`SELECT * FROM hostel WHERE Hostel_ID = ?`, id ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result);
+            let msg = "ok";
+            if(result.length == 0)
+                msg = "error";
+            res.send(msg);
+        }
+    });
+});
 
 
 
 app.listen(3001, () => {
-    console.log("Server is running on port 5000");
+    console.log("Server is running on port 3001");
 });
