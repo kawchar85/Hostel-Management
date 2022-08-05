@@ -336,6 +336,28 @@ app.put("/update/students", (req, res) => {
     );
 
 });
+app.put("/update/hostel", (req, res) => {
+    const data = req.body;
+    const reg = data.reg;
+    const hostel_id = data.hostel_id;
+    const room_id = data.room_id;
+
+    console.log("updating std info?");
+
+    db.query(
+        "UPDATE students SET hostel_id = ? , room_id = ? WHERE reg = ?",
+        [hostel_id, room_id, reg],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+                //res.send(result);
+            }
+        }
+    );
+
+});
 
 app.delete("/delete/students/:reg", (req, res) => {
     const reg = req.params.reg;
@@ -383,9 +405,11 @@ app.get("/getData/hostel", (req, res) => {
         } else {
             console.log(result);
             let msg = "ok";
-            if(result.length == 0)
-                msg = "error";
-            res.send(msg);
+            if(result.length == 0){
+                res.send("error");
+            } else {
+                res.send(result);
+            }
         }
     });
 });
