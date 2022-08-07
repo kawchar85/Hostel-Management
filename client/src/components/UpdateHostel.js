@@ -7,47 +7,55 @@ import Axios from 'axios';
 export default function UpdateHostel(props) {
     //const [publicData, setPublicData] = useContext(PublicContex);
 
+    const hostelData = JSON.parse(props.hostel);
+    console.log("here hostel data::");
+    console.log(hostelData);
+
     const [show, setShow] = useState(false);
+    const [finalMsg, setFinalMsg] = useState("");
 
     const [hostel, setHostel] = useState({
-        id: "-1",
-        type: "",
-        name: "",
-        address: "",
-        contact: "",
-        occupied_seats: 0,
-        total_seats: 0,
+        id: JSON.stringify(hostelData.Hostel_ID),
+        type: hostelData.Type,
+        name: hostelData.Name,
+        address: hostelData.Address,
+        contact: hostelData.Contact,
+        occupied_seats: hostelData.Occupied_Seats,
+        total_seats: hostelData.Total_Seats,
     })
 
     const [error, setError] = useState({
         id: "",
-        type: "* field is required",
-        name: "* field is required",
-        address: "* field is required",
-        contact: "* field is required",
-        total_seats: "* field is required",
+        type: "",
+        name: "",
+        address: "",
+        contact: "",
+        total_seats: "",
     })
 
-    useEffect(() => {
-        console.log("effect.. in update hostel.");
+    console.log("set: ");
+    console.log(hostel);
+
+    // useEffect(() => {
+    //     console.log("effect.. in update hostel.");
         
-        const hostelData = JSON.parse(props.hostel);
-        console.log("here hostel data::");
-        console.log(hostelData);
-        console.log(JSON.stringify(hostelData.Hostel_ID));
-        console.log(hostelData.Type);
+    //     const hostelData = JSON.parse(props.hostel);
+    //     console.log("here hostel data::");
+    //     console.log(hostelData);
+    //     console.log(JSON.stringify(hostelData.Hostel_ID));
+    //     console.log(hostelData.Type);
 
-        setHostel({ ...hostel, id : JSON.stringify(hostelData.Hostel_ID) });
-        setHostel({ ...hostel, type: hostelData.Type });
-        setHostel({ ...hostel, name: hostelData.Name });
-        setHostel({ ...hostel, address: hostelData.Address });
-        setHostel({ ...hostel, contact: hostelData.Contact });
-        setHostel({ ...hostel, occupied_seats: hostelData.Occupied_Seats });
-        setHostel({ ...hostel, total_seats: hostelData.Total_Seats });
+    //     setHostel({ ...hostel, id : JSON.stringify(hostelData.Hostel_ID) });
+    //     setHostel({ ...hostel, type: hostelData.Type });
+    //     setHostel({ ...hostel, name: hostelData.Name });
+    //     setHostel({ ...hostel, address: hostelData.Address });
+    //     setHostel({ ...hostel, contact: hostelData.Contact });
+    //     setHostel({ ...hostel, occupied_seats: hostelData.Occupied_Seats });
+    //     setHostel({ ...hostel, total_seats: hostelData.Total_Seats });
 
-        console.log("set: ");
-        console.log(hostel);
-    }, []);
+    //     console.log("set: ");
+    //     console.log(hostel);
+    // },[]);
 
     const handleSubmit = (event) => {
 
@@ -56,10 +64,28 @@ export default function UpdateHostel(props) {
         //check erro?
         const isEmpty = Object.values(error).every(x => x === null || x === "");
         console.log(isEmpty);
+        console.log(error);
         
         if (isEmpty) {
-
-            setShow(true);
+                Axios.put("http://localhost:3001/update/hostel", {
+                    hostel_id: hostel.id,
+                    type: hostel.type,
+                    name: hostel.name,
+                    address: hostel.address,
+                    contact: hostel.contact,
+                    occupied_seats: hostel.occupied_seats,
+                    total_seats: hostel.total_seats,
+        
+                }).then((response) => {
+                    if(response.data === "error"){
+                        console.log("baaal error");
+                        setFinalMsg("Something Error!!");
+                    } else {
+                        setFinalMsg("Hostel Updated successfully...");
+                    }
+                    setShow(true);
+                }).catch((e) => alert(e));
+                
         }
         console.log(hostel);
 
@@ -76,7 +102,7 @@ export default function UpdateHostel(props) {
             <Alert show={show} variant="success">
                 <Alert.Heading>How's it going?!</Alert.Heading>
                 <p>
-                    Hostel Updated successfully...
+                    {finalMsg}
                 </p>
                 <hr />
                 <div className="d-flex justify-content-end">
@@ -116,7 +142,6 @@ export default function UpdateHostel(props) {
                                 msg = "* field is required";
                             setError({ ...error, type: msg });
                         }}>
-                            <option>Select Type</option>
                             <option value="male" >Male</option>
                             <option value="female">Female</option>
                         </Form.Select>
@@ -131,6 +156,7 @@ export default function UpdateHostel(props) {
                         <Form.Control type="number" placeholder='Total number of seats' value = {hostel.total_seats} onChange={(event) => {
                             const value = event.target.value;
                             setHostel({ ...hostel, total_seats: value });
+                            //console.log(Number(value) + " ??? "+ Number(hostel.occupied_seats));
                             let msg = "";
                             if (value.length === 0)
                                 msg = "* field is required";
@@ -138,8 +164,10 @@ export default function UpdateHostel(props) {
                                 msg = "Total number of seats must be greater than zero!";
                             else if (!Number.isInteger(Number(value)))
                                 msg = "Invalid number!"
-                            else if (Number.isInteger(Number(value)) < Number.isInteger(Number(hostel.occupied_seats)))
+                            else if (Number(value) < Number(hostel.occupied_seats)){
                                 msg = "Total seats can't be less than occupied seats!";
+                                //console.log(Number.isInteger(Number(value)) + " ??? "+ Number(hostel.occupied_seats))
+                            }
                             setError({ ...error, total_seats: msg });
                         }} />
                         <span className="text-danger">{error.total_seats}</span>

@@ -9,6 +9,7 @@ import '../index.css';
 import { useSearchParams } from 'react-router-dom';
 import AddHostel from './AddHostel';
 import GetHostelData from './GetHostelData';
+import SwapManual from './SwapManual';
 
 export default function Administration() {
 
@@ -86,7 +87,7 @@ export default function Administration() {
                     <h2>{query.get("action")}  {query.get("section")}</h2>
                     </div>
 
-                    <GetHostelData />
+                    <SwapManual />
 
 
                 </div>

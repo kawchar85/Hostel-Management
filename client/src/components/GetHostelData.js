@@ -78,9 +78,8 @@ export default function GetHostelData() {
                 </Form>
             )}
 
-            {update && (<UpdateHostel hostel={hostelData} />)}
-
         </div>
+        {update && (<UpdateHostel hostel={hostelData} />)}
         <br/><br/>
         </>
     )

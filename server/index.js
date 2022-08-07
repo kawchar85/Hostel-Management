@@ -321,6 +321,7 @@ app.put("/update/students", (req, res) => {
     const room_id = data.room_id;
 
     console.log("updating std info?");
+    console.log(reg+" "+hostel_id+" "+room_id);
 
     db.query(
         "UPDATE students SET hostel_id = ? , room_id = ? WHERE reg = ?",
@@ -328,9 +329,10 @@ app.put("/update/students", (req, res) => {
         (err, result) => {
             if (err) {
                 console.log(err);
+                res.send("error");
             } else {
                 console.log(result);
-                //res.send(result);
+                res.send("ok");
             }
         }
     );
@@ -338,21 +340,26 @@ app.put("/update/students", (req, res) => {
 });
 app.put("/update/hostel", (req, res) => {
     const data = req.body;
-    const reg = data.reg;
     const hostel_id = data.hostel_id;
-    const room_id = data.room_id;
+    const type = data.type;
+    const name = data.name;
+    const address = data.address;
+    const contact = data.contact;
+    const total_seats = data.total_seats;
+    const occupied_seats = data.occupied_seats;
 
-    console.log("updating std info?");
+    console.log("updating hostel info?");
 
     db.query(
-        "UPDATE students SET hostel_id = ? , room_id = ? WHERE reg = ?",
-        [hostel_id, room_id, reg],
+        "UPDATE hostel SET Type = ? , Name = ? , Address = ? , Contact = ? , Total_Seats = ? , Occupied_Seats = ? WHERE Hostel_ID = ?",
+        [type, name, address, contact, total_seats, occupied_seats, hostel_id],
         (err, result) => {
             if (err) {
                 console.log(err);
+                res.send("error");
             } else {
                 console.log(result);
-                //res.send(result);
+                res.send(result);
             }
         }
     );
@@ -407,6 +414,23 @@ app.get("/getData/hostel", (req, res) => {
             let msg = "ok";
             if(result.length == 0){
                 res.send("error");
+            } else {
+                res.send(result);
+            }
+        }
+    });
+});
+
+app.get("/getData/student/", (req, res) => {
+    let reg = req.query.reg;
+    db.query(`SELECT * FROM students WHERE Reg = ?`, reg ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result);
+            if(result.length == 0){
+                res.send("notRegistered");
             } else {
                 res.send(result);
             }
