@@ -423,21 +423,36 @@ app.get("/getData/hostel", (req, res) => {
 
 app.get("/getData/student/", (req, res) => {
     let reg = req.query.reg;
-    db.query(`SELECT * FROM students WHERE Reg = ?`, reg ,(err, result) => {
+    db.query('SELECT * FROM `students` WHERE Reg = ?', reg ,(err, result) => {
         if (err) {
-            console.log(err);
-            res.send("error");
+            console.log( err);
+            res.send(err);
         } else {
             console.log(result);
             if(result.length == 0){
                 res.send("notRegistered");
             } else {
-                res.send(result);
+                res.send("Registered");
             }
         }
     });
 });
-
+app.get("/getData/user", (req, res) => {
+    let mail = req.query.email;
+    db.query(`SELECT * FROM students WHERE Email = ?`, mail ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            let msg = "ok";
+            if(result.length == 0){
+                res.send(result);
+            } else {
+                res.send("error");
+            }
+        }
+    });
+});
 
 
 app.listen(3001, () => {
