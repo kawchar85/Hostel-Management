@@ -2,15 +2,18 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React from "react";
 import {useState} from "react";
+import validator from 'validator';
 import Axios from 'axios';
-import { Alert, Container } from 'react-bootstrap';
+import { Alert, Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 function Login() {
     const [LoginState, setLoginState] = useState({
         email: "",
+        email_err: "* field can not be empty",
         password: "",
-        ck: false,
+        password_err: "* field can not be empty",
+        ck: false
 
     });
     const[LoginStatus, setLoginStatus] = useState(false);
@@ -72,7 +75,6 @@ function Login() {
                     {
                         setLoginStatus(true);
                         localStorage.setItem("token",response.data.token);
-                       // alert(response.data.token);
                         alert("Logged in!");
                     }
                     else
@@ -96,31 +98,49 @@ function Login() {
                 <div className="row justify-content-center align-items-center">
                     <h4>Login</h4>
                     
-                    <div className="my-4 w-50">
-                        <div className="form-floating my-3">
-                            <input 
-                                type="email" 
-                                className="form-control"  
-                                id="mailId"
-                                onChange={(event)=> {
+                    <div className="shadow p-4" style={{
+                        width: "60%",
+                        border: "3px solid lightGray",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                    }} >
+                    <Form.Group className="mb-3">
+                        <Form.Label>Email Address</Form.Label>
+                            <Form.Control type="text" placeholder="email" onChange={(event) => {
+                                const value = event.target.value;
+                                let msg = "";
+                                if(validator.isEmail(value))
+                                {
+                                    try{
+                                        setLoginState({...LoginState,email:value,email_err: msg});
+                                    }
+                                    catch(e) 
+                                    {
+                                        console.log(e);
+                                    }
+                                }
+                                else {
+                                    if(value.length === 0) msg="* field is required";
+                                    else msg="Invalid Mail!!"
+                                    setLoginState({...LoginState,email_err:msg});
+                                    console.log(value);
+                                }
+                            }} />
+                            <span className="text-danger">{LoginState.email_err}</span>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Password</Form.Label>
+                                <Form.Control type="text" placeholder="password" onChange={(event) => {
                                     const value = event.target.value;
-                                    setLoginState({...LoginState,email:value})
-                                } }
-                            />
-                            <label for="mailId">Email address</label>
-                        </div>
-                        <div className="form-floating my-3">
-                            <input 
-                                type="password"
-                                className="form-control" 
-                                id="pass" 
-                                onChange={(event)=> {
-                                    const value = event.target.value;
-                                    setLoginState({...LoginState,password:value})
-                                } }
-                            />
-                            <label for="pass">Password</label>
-                        </div>
+                                    let msg = "";
+                                    if(value.length === 0) msg="* field is required";
+                                    setLoginState({...LoginState, password:value, password_err:msg});
+                                
+                            }} />
+                            <span className="text-danger">{LoginState.email_err}</span>
+                        </Form.Group>
+                            
                         <div className="my-4">
                             <div className="custom-control custom-checkbox">
                                 <input
@@ -146,7 +166,7 @@ function Login() {
                             >
                                 Submit
                             </button>
-                            {LoginStatus && <button onClick={demoMethod}>demo check</button>}
+                            
                         </div>
                         <p className="forgot-password text-right my-4">
                             <a href="http://localhost:3000/forgotpass">Forgot password?</a>
