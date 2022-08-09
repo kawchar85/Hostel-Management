@@ -33,7 +33,7 @@ app.post("/add/students", (req, res) => {
     console.log(data);
 
     db.query(
-        "INSERT INTO students (reg, name, dept, merit, email, hostel_id,room_id,phone, role_id) VALUES (?,?,?,?,?,?,?,?,?)",
+        "INSERT INTO students (reg, name, dept, merit, email, hostel_id,roomid,phone, role_id) VALUES (?,?,?,?,?,?,?,?,?)",
         [reg, name, dept, merit, email, hostel_id, room_id, phone, role_id],
         (err, result) => {
             if (err) {
@@ -57,7 +57,7 @@ app.post("/add/login", (req, res) => {
             console.log(err);
         }
         db.query(
-        "INSERT INTO login (email, role_id, password) VALUES (?,?,?)",
+        "INSERT INTO login (email, roleid, password) VALUES (?,?,?)",
         [email, role_id, hash],
         (err, result) => {
             if (err) {
@@ -321,7 +321,6 @@ app.put("/update/students", (req, res) => {
     const room_id = data.room_id;
 
     console.log("updating std info?");
-    console.log(reg+" "+hostel_id+" "+room_id);
 
     db.query(
         "UPDATE students SET hostel_id = ? , room_id = ? WHERE reg = ?",
@@ -329,10 +328,9 @@ app.put("/update/students", (req, res) => {
         (err, result) => {
             if (err) {
                 console.log(err);
-                res.send("error");
             } else {
                 console.log(result);
-                res.send("ok");
+                //res.send(result);
             }
         }
     );
@@ -340,26 +338,21 @@ app.put("/update/students", (req, res) => {
 });
 app.put("/update/hostel", (req, res) => {
     const data = req.body;
+    const reg = data.reg;
     const hostel_id = data.hostel_id;
-    const type = data.type;
-    const name = data.name;
-    const address = data.address;
-    const contact = data.contact;
-    const total_seats = data.total_seats;
-    const occupied_seats = data.occupied_seats;
+    const room_id = data.room_id;
 
-    console.log("updating hostel info?");
+    console.log("updating std info?");
 
     db.query(
-        "UPDATE hostel SET Type = ? , Name = ? , Address = ? , Contact = ? , Total_Seats = ? , Occupied_Seats = ? WHERE Hostel_ID = ?",
-        [type, name, address, contact, total_seats, occupied_seats, hostel_id],
+        "UPDATE students SET hostel_id = ? , room_id = ? WHERE reg = ?",
+        [hostel_id, room_id, reg],
         (err, result) => {
             if (err) {
                 console.log(err);
-                res.send("error");
             } else {
                 console.log(result);
-                res.send(result);
+                //res.send(result);
             }
         }
     );
@@ -421,38 +414,6 @@ app.get("/getData/hostel", (req, res) => {
     });
 });
 
-app.get("/getData/student/", (req, res) => {
-    let reg = req.query.reg;
-    db.query('SELECT * FROM `students` WHERE Reg = ?', reg ,(err, result) => {
-        if (err) {
-            console.log( err);
-            res.send(err);
-        } else {
-            console.log(result);
-            if(result.length == 0){
-                res.send("notRegistered");
-            } else {
-                res.send("Registered");
-            }
-        }
-    });
-});
-app.get("/getData/user", (req, res) => {
-    let mail = req.query.email;
-    db.query(`SELECT * FROM students WHERE Email = ?`, mail ,(err, result) => {
-        if (err) {
-            console.log(err);
-            res.send("error");
-        } else {
-            let msg = "ok";
-            if(result.length == 0){
-                res.send(result);
-            } else {
-                res.send("error");
-            }
-        }
-    });
-});
 
 
 app.listen(3001, () => {
