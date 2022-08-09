@@ -28,7 +28,6 @@ export default function GetHostelData() {
             console.log("dukse"+ id);
             Axios.get("http://localhost:3001/getData/hostel", { params: { hostel_id: id } }).then((response) => {
                 if(response.data === "error"){
-                    console.log("baaal error");
                     setError({ ...error, id: "You have entered an Invalid id!!..." });
                 } else {
                     let data = JSON.stringify(response.data[0]);
