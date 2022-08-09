@@ -33,7 +33,7 @@ app.post("/add/students", (req, res) => {
     console.log(data);
 
     db.query(
-        "INSERT INTO students (reg, name, dept, merit, email, hostel_id,roomid,phone, role_id) VALUES (?,?,?,?,?,?,?,?,?)",
+        "INSERT INTO students (reg, name, dept, merit, email, hostel_id,room_id,phone, role_id) VALUES (?,?,?,?,?,?,?,?,?)",
         [reg, name, dept, merit, email, hostel_id, room_id, phone, role_id],
         (err, result) => {
             if (err) {
@@ -57,7 +57,7 @@ app.post("/add/login", (req, res) => {
             console.log(err);
         }
         db.query(
-        "INSERT INTO login (email, roleid, password) VALUES (?,?,?)",
+        "INSERT INTO login (email, role_id, password) VALUES (?,?,?)",
         [email, role_id, hash],
         (err, result) => {
             if (err) {
@@ -432,7 +432,7 @@ app.get("/getData/student/", (req, res) => {
             if(result.length == 0){
                 res.send("notRegistered");
             } else {
-                res.send(result);
+                res.send("Registered");
             }
         }
     });
