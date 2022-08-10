@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import SingleStudent from './SingleStudent';
 
+import SingleStudent from './SingleStudent';
+import { PublicContex } from './PublicContext';
 
 export default function RoomDetails(props) {
 
+    const [publicData, setPublicData] = useContext(PublicContex);
     const [student, setStudent] = useState([]);
     
     const getData = async () => {
@@ -31,12 +33,19 @@ export default function RoomDetails(props) {
         console.log("data in room details");
         console.log(student);
     }, [student]);
+
+    const handleClose = () => {
+        console.log("closing..."+props.id);
+        const arr = publicData.modalShow;
+        arr[props.id] = false;
+        setPublicData({...publicData,modalShow: arr});
+    };
 return (
-    <>
+    <React.Fragment key={props.id}>
 
         <Modal
-            show={props.show(props.id)}
-            onHide={props.onHide(props.id)}
+            show={publicData.modalShow[props.id]}
+            onHide={handleClose}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -48,29 +57,21 @@ return (
             </Modal.Header>
             <Modal.Body>
                 <h4>Room #{props.room_id}</h4>
-                <p>
-
-                Hotel id diye query kore student list ber korbo(useEffect). 
-                Info in each card:
-                Std name: .....
-                Reg: ....
-                Dept: ....
-                Phone ....
-                </p>
 
                 {
-                        student.map((val) => {
-                            return <SingleStudent data={val} />
+                        student.map((val, idx) => {
+                            return <SingleStudent data={val} key = {idx} />
                         })
                 }
+                {!student.length&&(<p>This Room is empty</p>)}
 
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={props.onHide(props.id)}>Close</Button>
+                <Button onClick={handleClose}>Close</Button>
             </Modal.Footer>
         </Modal>
 
-    </>
+        </React.Fragment>
 
 )
 }

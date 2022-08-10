@@ -6,15 +6,16 @@ export default function SingleStudent(props) {
     console.log(props);
     
     return (
-        <>
+        <React.Fragment key={props.data.Reg}>
         
         <div className="shadow p-4" style={{
-            width: "60%",
+            width: "40%",
             border: "3px solid green",
             borderRadius: "10px",
-            marginLeft: "auto",
-            marginRight: "auto",
+            marginLeft: "30px",
+            marginRight: "10px",
             marginBottom: "50px",
+            float:"left",
         }} > 
             <div style={{
                 color: "#666",
@@ -37,6 +38,6 @@ export default function SingleStudent(props) {
 
         </div>
 
-        </>
+        </React.Fragment>
     )
 }

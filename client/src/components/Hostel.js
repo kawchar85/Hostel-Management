@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Axios from 'axios';
 import { useParams } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 
+
+import { PublicContex } from './PublicContext';
 import RoomDetails from './RoomDetails';
 
 
 export default function Hostel() {
+
+  const [publicData, setPublicData] = useContext(PublicContex);
 
   const {id} = useParams();
   const [modalShow, setModalShow] = React.useState([]);
@@ -49,6 +53,8 @@ const [roomID, setRoomID] = useState(0);
               console.log("length ----> ");
               console.log(arr);
               setModalShow(arr);
+              setPublicData({...publicData,modalShow: arr});
+
           }
         }).catch((e) => alert(e));
     };
@@ -74,6 +80,7 @@ const [roomID, setRoomID] = useState(0);
     const arr = modalShow;
     arr[id] = true;
     setModalShow(arr);
+    setPublicData({...publicData,modalShow: arr});
     console.log(modalShow);
   };
 
@@ -182,8 +189,8 @@ const [roomID, setRoomID] = useState(0);
             }}>
 
               {rooms.map((val, idx) => {
-                  return <>
-                          <Button id={idx} variant="link" onClick={e => handleClick(e)} >{val.Room_ID}, </Button>
+                  return <React.Fragment key={idx}>
+                          <Button id={idx} key={idx} variant="link" onClick={e => handleClick(e)} >{val.Room_ID}, </Button>
                           <RoomDetails 
                               show={getShow}
                               onHide={handleClose}
@@ -191,7 +198,7 @@ const [roomID, setRoomID] = useState(0);
                               room_id = {val.Room_ID}
                               hostel_id = {id}
                           />
-                        </>
+                        </React.Fragment>
                 }
               )}
 

@@ -58,12 +58,12 @@ function App() {
 
 
 
-
   const [publicData, setPublicData] = useState(
     {
       user: user,
       hostel: hostelList,
-      refresh : false
+      refresh : false,
+      modalShow: []
     }
   );
 
