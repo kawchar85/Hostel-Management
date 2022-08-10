@@ -450,6 +450,31 @@ app.get("/getData/login", (req, res) => {
 });
 
 
+app.get("/getData/student/room", (req, res) => {
+    let hostel_id = req.query.hostel_id;
+    let room_id = req.query.room_id;
+    db.query(`SELECT * FROM students WHERE Hostel_ID = ? AND Room_ID = ?`, [hostel_id, room_id] ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.get("/getData/rooms", (req, res) => {
+    let id = req.query.hostel_id; 
+    db.query(`SELECT Room_ID FROM rooms WHERE Hostel_ID = ?`, id ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            res.send(result);
+        }
+    });
+});
+
 
 app.listen(3001, () => {
     console.log("Server is running on port 3001");
