@@ -36,27 +36,6 @@ export default function UpdateHostel(props) {
     console.log("set: ");
     console.log(hostel);
 
-    // useEffect(() => {
-    //     console.log("effect.. in update hostel.");
-        
-    //     const hostelData = JSON.parse(props.hostel);
-    //     console.log("here hostel data::");
-    //     console.log(hostelData);
-    //     console.log(JSON.stringify(hostelData.Hostel_ID));
-    //     console.log(hostelData.Type);
-
-    //     setHostel({ ...hostel, id : JSON.stringify(hostelData.Hostel_ID) });
-    //     setHostel({ ...hostel, type: hostelData.Type });
-    //     setHostel({ ...hostel, name: hostelData.Name });
-    //     setHostel({ ...hostel, address: hostelData.Address });
-    //     setHostel({ ...hostel, contact: hostelData.Contact });
-    //     setHostel({ ...hostel, occupied_seats: hostelData.Occupied_Seats });
-    //     setHostel({ ...hostel, total_seats: hostelData.Total_Seats });
-
-    //     console.log("set: ");
-    //     console.log(hostel);
-    // },[]);
-
     const handleSubmit = (event) => {
 
         console.log("now in handlesubmit2");
@@ -78,7 +57,6 @@ export default function UpdateHostel(props) {
         
                 }).then((response) => {
                     if(response.data === "error"){
-                        console.log("baaal error");
                         setFinalMsg("Something Error!!");
                     } else {
                         setFinalMsg("Hostel Updated successfully...");

@@ -73,39 +73,14 @@ const [roomID, setRoomID] = useState(0);
 
   const handleClick = e => {
     e.preventDefault();
-    console.log("clicked");
     const id = e.target.id;
-    console.log(rooms[id].Room_ID);
     setRoomID(rooms[id].Room_ID);
     const arr = modalShow;
     arr[id] = true;
     setModalShow(arr);
     setPublicData({...publicData,modalShow: arr});
-    console.log(modalShow);
-  };
-
-  const handleClose = (id) => {
-    console.log("closing..."+id);
-    const arr = modalShow;
-    arr[id] = false;
-    setModalShow(arr);
-    console.log(arr);
 
   };
-
-  const getShow = (id) =>{
-    console.log("get..."+id+" = "+modalShow[id]);
-    return modalShow[id];
-  }
-  
-  const getModal = ()=>{
-    return (<RoomDetails 
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-              id={roomID}
-              hostel_id = {id}
-            />)
-  }
 
   return (
     <>
@@ -192,8 +167,6 @@ const [roomID, setRoomID] = useState(0);
                   return <React.Fragment key={idx}>
                           <Button id={idx} key={idx} variant="link" onClick={e => handleClick(e)} >{val.Room_ID}, </Button>
                           <RoomDetails 
-                              show={getShow}
-                              onHide={handleClose}
                               id={idx}
                               room_id = {val.Room_ID}
                               hostel_id = {id}

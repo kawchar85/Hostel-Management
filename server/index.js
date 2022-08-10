@@ -359,6 +359,33 @@ app.put("/update/hostel", (req, res) => {
 
 });
 
+app.put("/update/notice", (req, res) => {
+    const data = req.body;
+    const hostel_id = data.hostel_id;
+    const date_time = data.date_time;
+    //const date_time = moment(data.date_time.format('YYYY-MM-DD HH:mm:ss'));
+    const title = data.title;
+    const description = data.description;
+    const priority = data.priority;
+    const old_title = data.old_title;
+
+    console.log(date_time);
+    db.query(
+        "UPDATE notice_board SET Hostel_ID = ? , Title = ? , Description = ? , Priority = ? WHERE DateTime = ? AND Title = ?",
+        [hostel_id, title, description, priority, date_time, old_title],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                console.log(result);
+                res.send(result);
+            }
+        }
+    );
+
+});
+
 app.delete("/delete/students/:reg", (req, res) => {
     const reg = req.params.reg;
     db.query("DELETE FROM students WHERE reg = ?", reg, (err, result) => {
