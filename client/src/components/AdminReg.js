@@ -133,7 +133,7 @@ export default function AdminReg () {
             </Form.Group>
 
             <Form.Group className="mb-3">
-            <Form.Label>Contact</Form.Label>
+            <Form.Label>Email</Form.Label>
             <Form.Control type="email" placeholder="example@something.com" onChange={(event) => {
             const value = event.target.value;
             setAdmin({ ...admin, email: value });

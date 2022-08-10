@@ -1,7 +1,7 @@
 //for test 
 
 
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Axios from 'axios';
 import AdministrationSidebar from './AdministrationSidebar';
 
@@ -11,7 +11,14 @@ import AddHostel from './AddHostel';
 import GetHostelData from './GetHostelData';
 import SwapManual from './SwapManual';
 
+import { PublicContex } from './PublicContext';
+
 export default function Administration() {
+
+    const [publicData, setPublicData] = useContext(PublicContex);
+    // console.log(publicData);
+    // setPublicData({...publicData,refrash: true});
+    // console.log(publicData);
 
     const [reg, setReg] = useState(0);
     const [name, setName] = useState("");

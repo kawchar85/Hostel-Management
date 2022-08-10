@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import SingleHostel from './SingleHostel';
 
+import { PublicContex } from './PublicContext';
+
 export default function NavBar(props) {
 
+    const [publicData, setPublicData] = useContext(PublicContex);
+    
     const handleClick = (selectedKey) => {
         //alert(`selected ${selectedKey}`);
         const msg = "You are in " + selectedKey;
@@ -17,25 +21,6 @@ export default function NavBar(props) {
     function isAdministration() {
         return true;
     }
-
-    const [hostelList, setHostelList] = useState([]);
-    //get Hostel list from Database
-    const getHostels = () => {
-        Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
-            //Axios.get("http://localhost:3001/hostel").then((response) => {
-            setHostelList(response.data);
-            console.log("list");
-            console.log(hostelList);
-        });
-    };
-
-    useEffect(() => {
-        console.log("effect...");
-        getHostels();
-
-        //hostel table change er track rakhte hobe.
-        //apadoto ignoring
-    }, []);
 
     let page1, page2;
     if (isLogged()) {
@@ -63,8 +48,8 @@ export default function NavBar(props) {
                             <Nav.Link href="/home">Home</Nav.Link>
 
                             <NavDropdown title="Hostels" id="navbarScrollingDropdown">
-                                {hostelList.map((val) => {
-                                    return <SingleHostel Hostel_ID={val.Hostel_ID} Name={val.Name} />
+                                {publicData.hostel.map((val, idx) => {
+                                    return <SingleHostel Hostel_ID={val.Hostel_ID} Name={val.Name} key={idx} />
                                 }
                                 )}
 

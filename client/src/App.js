@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Axios from 'axios';
 
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
@@ -16,20 +17,65 @@ import AdminReg from "./components/AdminReg";
 import ForgotPass from "./components/ForgotPass";
 import Complain from "./components/Complain";
 
+import { PublicContex } from "./components/PublicContext";
 
+//how to use public data?
+//import {useContext } from 'react'
+//import { PublicContex } from './PublicContext';
+//const [publicData, setPublicData] = useContext(PublicContex);
 function App() {
 
-  const [msg, setMsg] = useState("Hello World!");
+  const [hostelList, setHostelList] = useState([]);
+  const [user, setUser] = useState(
+    {
+      userID: 1,
+      name: "admin",
+      rule_id: 100,
+      email: "abc@xyz.com"
+    }
+  );
 
+  //get Hostel list from Database
+  const getHostels = () => {
+    Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
+      setHostelList(response.data);
+      //console.log(response.data);
+      setPublicData({...publicData,hostel:response.data});
+    });
+  };
+
+  useEffect(() => {
+    getHostels();
+  },[]);
+
+
+  const [msg, setMsg] = useState("Hello World!");
   //getting info from NavBar.js
   const getData = (info) => {
     setMsg(info);
   };
 
+
+
+
+
+  const [publicData, setPublicData] = useState(
+    {
+      user: user,
+      hostel: hostelList,
+      refresh : false
+    }
+  );
+
+
   return (
-    <div className="App">
-      <NavBar info={getData} />
-      <BrowserRouter>
+
+    <PublicContex.Provider value={[publicData, setPublicData]}>
+      {console.log("Public data: ")}
+      {console.log(publicData)}
+      <div className="App">
+        <NavBar info={getData} />
+        <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -49,9 +95,10 @@ function App() {
           <Route path="*" element={<Error />} />
 
         </Routes>
-      </BrowserRouter>
+        </BrowserRouter>
 
-    </div>
+      </div>
+    </PublicContex.Provider>
   );
 }
 
