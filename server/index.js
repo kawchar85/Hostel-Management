@@ -27,11 +27,6 @@ app.post("/add/students", (req, res) => {
     const room_id = data.room_id;
     const role_id = data.role_id;
     const email = data.email;
-
-    console.log("std adding");
-   // alert("helloooo");
-    console.log(data);
-
     db.query(
         "INSERT INTO students (reg, name, dept, merit, email, hostel_id,room_id,phone, role_id) VALUES (?,?,?,?,?,?,?,?,?)",
         [reg, name, dept, merit, email, hostel_id, room_id, phone, role_id],
@@ -108,8 +103,6 @@ app.post("/add/guardian_info", (req, res) => {
 });
 app.post("/add/administration", (req, res) => {
     const data = req.body;
-    console.log(data);
-
     const phone = data.phone;
     const email = data.email;
     const name = data.name;
@@ -143,7 +136,6 @@ app.post("/add/complain",(req,res)=>{
         (err, result) => {
             if (err) {
                 console.log(err);
-                console.log("complain errrr");
             } else {
                 console.log(result);
                 res.send(result);
@@ -432,6 +424,25 @@ app.get("/getData/student/", (req, res) => {
             if(result.length == 0){
                 res.send("notRegistered");
             } else {
+                res.send("Registered");
+            }
+        }
+    });
+});
+
+app.get("/getData/login", (req, res) => {
+    console.log("NOW IN QUERY")
+    let mail = req.query.mail;
+    db.query(`SELECT * FROM login WHERE Email = ?`, mail ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result);
+            if(result.length == 0){
+                res.send("notRegistered");
+            } else {
+                console.log("pathabo je registerd");
                 res.send("Registered");
             }
         }

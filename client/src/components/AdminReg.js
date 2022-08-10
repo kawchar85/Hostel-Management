@@ -7,6 +7,7 @@ export default function AdminReg () {
 
     const [admin, setAdmin] = useState({
         name: "",
+        password:"",
         phone:"",
         email:"",
         hostel_id:"",
@@ -16,6 +17,7 @@ export default function AdminReg () {
 
     const [error, setError] = useState({
         name: "* field is required",
+        pass: "* field is required",
         phone: "* field is required",
         mail: "* field is required",
         hostel: "* field is required",
@@ -24,24 +26,45 @@ export default function AdminReg () {
     });
 
     const addAdmin =()=> {
+
+        Axios.get("http://localhost:3001/getData/login", { params: { mail: admin.email } }).then((response) => {
+            console.log("Amar nam preity");
+            console.log(response.data);
+            if(response.data === "notRegistered")
+            {
+                const isEmpty = Object.values(error).every(x => x === null || x === "");
+                if(isEmpty) {
+                Axios.post("http://localhost:3001/add/administration", {
+                "name":admin.name,
+                "phone":admin.phone,
+                "email":admin.email,
+                "hostel_id":admin.hostel_id,
+                "designation":admin.designation,
+                "role_id":admin.role_id,
+            }).then( ()=> {
+                console.log("look it works!!");
+            }).catch((e)=>{
+                alert("Something went wrong, try again");
+                console.log(e);
+            });
+            Axios.post("http://localhost:3001/add/login", {
+                "password":admin.password,
+                "role_id": admin.role_id,
+                "email": admin.email
+            }).then(()=> {
+                console.log("login added")
+            } ); 
+            }
+            else alert("No field can remain empty");
+            }
+            else if(response.data === "Registered") {
+                alert("This registration number is in use!");
+            }
+            else {
+                alert("Something went wrong, try again!");
+            }
+        }).catch((e) => alert(e));
         console.log("now in handlesubmit");
-        const isEmpty = Object.values(error).every(x => x === null || x === "");
-        if(isEmpty) {
-            Axios.post("http://localhost:3001/add/administration", {
-            "name":admin.name,
-            "phone":admin.phone,
-            "email":admin.email,
-            "hostel_id":admin.hostel_id,
-            "designation":admin.designation,
-            "role_id":admin.role_id,
-        }).then( ()=> {
-            console.log("look it works!!");
-        }).catch((e)=>{
-            alert("baal");
-            console.log("hoilona");
-        });
-        }
-        else alert("No field can remain empty");
     };
 
     return(
@@ -105,6 +128,21 @@ export default function AdminReg () {
                 setError({ ...error, mail: msg });
             }} />
             <span className="text-danger">{error.mail}</span>
+            </Form.Group>
+            <Form.Group className="mb-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="text" placeholder="password" onChange={(event) => {
+                const value = event.target.value;
+                setAdmin({ ...admin, password: value });
+                let msg = "";
+        
+                if (value.length === 0)
+                    msg = "* field is required";
+                else if(value.length < 5)
+                    msg = "Password should be at least 5 digit long!";
+                    setError({ ...error, pass: msg });
+                }}/>
+            <span className="text-danger">{error.pass}</span>
             </Form.Group>
         
         </Form>
