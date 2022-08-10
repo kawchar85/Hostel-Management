@@ -33,6 +33,7 @@ app.post("/add/students", (req, res) => {
         (err, result) => {
             if (err) {
                 console.log(err);
+                res.send("error");
             } else {
                 res.send("Values Inserted");
             }
@@ -117,7 +118,7 @@ app.post("/add/administration", (req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                console.log(result);
+                res.send(result);
             }
         }
     );
@@ -164,35 +165,35 @@ app.post("/add/hostel", (req, res) => {
         (err, result) => {
             if (err) {
                 console.log(err);
-                console.log("hostel errrr");
             } else {
-                console.log(result);
                 res.send(result);
             }
         }
     );
 });
 
-
-
-/*
-app.post("/add/", (req, res) => {
+app.post("/add/notice", (req, res) => {
     const data = req.body;
 
-    const phone = data.phone;
+    const hostel_id = data.hostel_id;
+    const date_time = data.date_time;
+    const title = data.title;
+    const description = data.description;
+    const priority = data.priority;
 
     db.query(
-        "INSERT INTO table (phone, name, address) VALUES (?,?,?)",
-        [phone, name, address],
+        "INSERT INTO notice_board (Title, Hostel_ID, Description, Priority) VALUES (?,?,?,?)",
+        [title, hostel_id, description, priority],
         (err, result) => {
             if (err) {
                 console.log(err);
+                res.send("error");
             } else {
-                console.log(result);
+                res.send(result);
             }
         }
     );
-}); */
+});
 
 
 app.post("/authMail",(req,res) =>{
@@ -384,8 +385,6 @@ app.delete("/delete/hostel/:id", (req, res) => {
 app.get("/getData", (req, res) => {
     console.log("now in get Data");
     let table = req.query.table;
-    //console.log(req);
-    //console.log(table);
 
     db.query(`SELECT * FROM ${table}`, (err, result) => {
         if (err) {
@@ -402,8 +401,7 @@ app.get("/getData/hostel", (req, res) => {
             console.log(err);
             res.send("error");
         } else {
-            console.log(result);
-            let msg = "ok";
+            
             if(result.length == 0){
                 res.send("error");
             } else {
