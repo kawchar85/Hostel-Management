@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import validator from 'validator';
 import Axios from 'axios';
@@ -24,6 +24,24 @@ export default function AdminReg () {
         designation: "* field is required",
         role: "* field is required",
     });
+    const [hostel, setHostel] = useState({
+        hostels : []
+    })
+
+
+    const getHostels = async() => {
+        const response= await Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
+            let tmp = {hostels : response.data};
+            setHostel({hostels : response.data} , ()=>{
+                console.log(hostel.hostels);
+            });
+        });
+    };
+
+    useEffect( ()=>{
+        console.log("hi");
+        getHostels();
+     }, [] );
 
     const addAdmin =()=> {
 
@@ -157,9 +175,11 @@ export default function AdminReg () {
             msg = "* field is required";
             setError({ ...error, hostel: msg });
             }}>
-            <option>Select hostel</option>
-                <option value="1" >1st hall</option>
-                <option value="2">mujib hall</option>
+            {hostel.hostels.map((option, index) => (
+                <option key={index} value={option.Hostel_ID}>
+                    {option.Name}
+                </option>
+            ))}
             </Form.Select>
             <span className="text-danger">{error.hostel}</span>
         </Form.Group>
