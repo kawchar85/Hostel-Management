@@ -11,7 +11,7 @@ export default function Error() {
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <CardGroup>
                     <Card border="primary" style={{ width: '80%' }}>
-                        <Card.Img variant="top" src="images/404.png" width="100px" height="600px" />
+                        <Card.Img variant="top" src="images/404.png" width="220px" height="400px" />
                     </Card>
                     <Card bg="light" border="primary" style={{ width: '18rem' }}>
                         <Card.Header><h2>401 Error | Page not found</h2></Card.Header>

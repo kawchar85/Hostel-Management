@@ -1,28 +1,31 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { PublicContex } from './PublicContext';
 
-export default function SidebarItem({item}){
+export default function SidebarItem({ item }) {
     const [open, setOpen] = useState(false)
+    const [publicData, setPublicData] = useContext(PublicContex);
 
-    
-    if(item.childrens){
+    if (item.childrens) {
         return (
             <div className={open ? "sidebar-item open" : "sidebar-item"}>
                 <div className="sidebar-title">
                     <span>
-                        {item.title}    
-                    </span> 
+                        {item.title}
+                    </span>
                     <i className="bi-chevron-down toggle-btn" onClick={() => setOpen(!open)}></i>
                 </div>
                 <div className="sidebar-content">
-                    { item.childrens.map((child, index) => <SidebarItem key={index} item={child} />) }
+                    {item.childrens.map((child, index) => <SidebarItem key={index} item={child} />)}
                 </div>
             </div>
         )
-    }else{
-        return (
-            <a href={item.path || "#"} className="sidebar-item plain">
-                {item.title}
-            </a>
-        )
+    } else {
+        if (publicData.user.rule_id === 20 || publicData.user.rule_id === item.priority)
+            return (
+                <a href={item.path || "#"} className="sidebar-item plain">
+                    {item.title}
+                </a>
+            )
+        else return (<></>)
     }
 }

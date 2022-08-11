@@ -669,8 +669,10 @@ app.get("/getData/rooms", (req, res) => {
 app.get("/getData/notice", (req, res) => {
     let sortBy = req.query.name;
     let type = req.query.type;
-    console.log("SELECT * FROM notice_board ORDER BY "+sortBy+" "+type);
-    db.query(`SELECT * FROM notice_board ORDER BY ? ?`, [sortBy, type] ,(err, result) => {
+    
+    //db.query(`SELECT * FROM notice_board ORDER BY ? ?`, [sortBy, type] ,(err, result) => {
+    let sql = "SELECT * FROM notice_board ORDER BY "+sortBy+" "+type;
+    db.query(sql,(err, result) => {
         if (err) {
             console.log(err);
             res.send("error");

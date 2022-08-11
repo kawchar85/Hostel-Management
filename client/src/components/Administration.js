@@ -82,6 +82,7 @@ export default function Administration() {
 
                     {com}
 
+                    <NoticeList />
 
                 </div>
             </div>

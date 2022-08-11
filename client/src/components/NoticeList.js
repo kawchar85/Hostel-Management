@@ -17,17 +17,19 @@ export default function NoticeList() {
         up : true,
         down : true,
     });
-
-    const [sortBy, setSortBy] = useState({
-        name: "Priority",
-        type: "DESC",
+    const [prioritySort, setPrioritySort] = useState({
+        up : true,
+        down : true,
+    });
+    const [hostelIdSort, setHostelIdSort] = useState({
+        up : true,
+        down : true,
     });
 
-    // const getNotices = () => {
-    //     Axios.get("http://localhost:3001/getData/", { params: { table: "notice_board" } }).then((response) => {
-    //         setNotices(response.data);
-    //     });
-    // };
+    const [sortBy, setSortBy] = useState({
+        name: "DateTime",
+        type: "DESC",
+    });
 
     const getNotices = () => {
         Axios.get("http://localhost:3001/getData/notice", { params: { name: sortBy.name, type: sortBy.type } }).then((response) => {
@@ -63,14 +65,42 @@ export default function NoticeList() {
     
 
     const handleDateAsc = () =>{
-        console.log("date asc");
-        setSortBy({name: "Priority", type: "ASC"});
+        setSortBy({name: "DateTime", type: "ASC"});
         setDateSort({down: true, up: false});
+        setPrioritySort({down: true, up: true});
+        setHostelIdSort({down: true, up: true});
     }
     const handleDateDesc = () =>{
-        console.log("date Desc");
-        setSortBy({name: "Priority", type: "DESC"});
+        setSortBy({name: "DateTime", type: "DESC"});
         setDateSort({down: false, up: true});
+        setPrioritySort({down: true, up: true});
+        setHostelIdSort({down: true, up: true});
+    }
+
+    const handlePriorityAsc = () =>{
+        setSortBy({name: "Priority", type: "ASC"});
+        setPrioritySort({down: true, up: false});
+        setDateSort({down: true, up: true});
+        setHostelIdSort({down: true, up: true});
+    }
+    const handlePriorityDesc = () =>{
+        setSortBy({name: "Priority", type: "DESC"});
+        setPrioritySort({down: false, up: true});
+        setDateSort({down: true, up: true});
+        setHostelIdSort({down: true, up: true});
+    }
+
+    const handleHostelAsc = () =>{
+        setSortBy({name: "Hostel_ID", type: "ASC"});
+        setHostelIdSort({down: true, up: false});
+        setDateSort({down: true, up: true});
+        setPrioritySort({down: true, up: true});
+    }
+    const handleHostelDesc = () =>{
+        setSortBy({name: "Hostel_ID", type: "DESC"});
+        setHostelIdSort({down: false, up: true});
+        setDateSort({down: true, up: true});
+        setPrioritySort({down: true, up: true});
     }
 
     if (!edit && !del)
@@ -98,7 +128,7 @@ export default function NoticeList() {
                                         padding: "0px",
                                         background: "none",
                                     }} >
-                                        &#9650;
+                                        &#9660;
                                     </button>)}
 
                                     {dateSort.down && (
@@ -107,13 +137,51 @@ export default function NoticeList() {
                                         padding: "0px",
                                         background: "none",
                                     }} >
-                                        &#9660;
+                                        &#9650;
                                     </button>)}
                                     
                                 </th>
                                 <th>Title</th>
-                                <th>Hostel ID</th>
-                                <th>Priority</th>
+                                <th>
+                                    Hostel ID
+                                    {hostelIdSort.up && (
+                                    <button onClick={handleHostelAsc} style={{
+                                        border: "none",
+                                        padding: "0px",
+                                        background: "none",
+                                    }} >
+                                        &#9660;
+                                    </button>)}
+
+                                    {hostelIdSort.down && (
+                                    <button onClick={handleHostelDesc} style={{
+                                        border: "none",
+                                        padding: "0px",
+                                        background: "none",
+                                    }} >
+                                        &#9650;
+                                    </button>)}
+                                </th>
+                                <th>
+                                    Priority
+                                    {prioritySort.up && (
+                                    <button onClick={handlePriorityAsc} style={{
+                                        border: "none",
+                                        padding: "0px",
+                                        background: "none",
+                                    }} >
+                                        &#9660;
+                                    </button>)}
+
+                                    {prioritySort.down && (
+                                    <button onClick={handlePriorityDesc} style={{
+                                        border: "none",
+                                        padding: "0px",
+                                        background: "none",
+                                    }} >
+                                        &#9650;
+                                    </button>)}
+                                </th>
                                 <th>Description</th>
                                 <th>Edit</th>
                                 <th>Delete</th>

@@ -16,10 +16,10 @@ export default function NavBar(props) {
     }
 
     function isLogged() {
-        return false;
+        return (publicData.user.rule_id>0);
     }
     function isAdministration() {
-        return true;
+        return publicData.user.rule_id>15;
     }
 
     let page1, page2;
