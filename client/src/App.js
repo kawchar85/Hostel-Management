@@ -28,10 +28,8 @@ function App() {
   const [hostelList, setHostelList] = useState([]);
   const [user, setUser] = useState(
     {
-      userID: 1,
-      name: "admin",
-      rule_id: 100,
-      email: "abc@xyz.com"
+      rule_id: -1,
+      email: "c@gmail.com"
     }
   );
 

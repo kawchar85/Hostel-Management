@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import Axios from 'axios';
 import { PublicContex } from './PublicContext';
+import jwt_decode from "jwt-decode";
 
 export default function Profile() {
 
@@ -25,36 +26,51 @@ export default function Profile() {
 const [publicData, setPublicData] = useContext(PublicContex);
 
 const [std, setStd] = useState({
-  reg: "2018331008",
-  std_name: "preity",
-  password: "aaaa",
-  dept: "cse",
-  merit: "96",
-  email: "s@gmail.com",
-  hostelID: "1",
-  roomID: "306",
-  phone: "01770056982",
-  roleID:"1",
-  roleTag: "Student",
-  guardian_name: "hululu",
-  guardian_address:"huhuhu",
-  guardian_phone: "01723868841",
+  reg: null,
+  std_name: null,
+  password: null,
+  dept: null,
+  merit: null,
+  email: null,
+  hostelID: null,
+  roomID: null,
+  phone: null,
+  guardian_name: null,
+  guardian_address:null,
+  guardian_phone: null,
 })
 
 const[hostel, setHostel] = useState({
     hostels:[]
 })
-const getHostels = async() => {
-    const response= await Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
-        let tmp = {hostels : response.data};
-        setHostel({hostels : response.data} , ()=>{
-            console.log(this.state);
+
+let obj = publicData.user;
+obj.email=publicData.user.email;
+obj.rule_id= 2; //publicData.user.rule_id;
+const getStudent = async() => {
+    const response= await Axios.get("http://localhost:3001/getData/user", { params: { mail: publicData.user.email, role:publicData.user.rule_id } }).then((response) => {
+            let data=response.data[0];
+            setStd({...std,reg:data.Reg,email:data.Email,std_name:data.Name,dept:data.Dept,merit:data.Merit,hostelID:data.Hostel_ID,roomID:data.Room_ID,phone:data.Phone});
+            console.log(data.Phone + " preity");
+            console.log(std.reg);
+            console.log(data);
         });
-    });
+        console.log(std);
+        
+
 };
 
     useEffect(()=> {
-        getHostels();
+        getStudent();
+        try{
+          const token = localStorage.getItem('token');
+          let decodedToken = jwt_decode(token);
+          console.log(decodedToken);
+        }
+        catch(err)
+        {
+          console.log(err);
+        }
     },[]);
 
 
@@ -76,17 +92,17 @@ const getHostels = async() => {
                 "email": std.email,
                 "hostel_id": std.hostelID,
                 "room_id": std.roomID,
-                "phone": this.state.phone,
-                "role_id":this.state.roleID
+                "phone": std.phone,
+                "role_id":publicData.user.ule_id
     
             }).then((response) => {
                 if(response.data === "error"){
                     setFinalMsg("Something Error!!");
                 } else {
-                    setFinalMsg("Hostel Updated successfully...");
+                    setFinalMsg("Student Updated successfully...");
                 }
                 setShow(true);
-            }).catch((e) => alert(e));
+            }).catch((e) => alert(e.response.data));
             
     }
     console.log(std);

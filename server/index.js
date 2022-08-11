@@ -5,6 +5,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const cryptoval = 10;
 const jwt = require("jsonwebtoken");
+const { response } = require("express");
 
 app.use(cors());
 app.use(express.json());
@@ -385,6 +386,34 @@ app.put("/update/notice", (req, res) => {
     );
 
 });
+app.put("/update/student", (req, res) => {
+    const data = req.body;
+    const reg = data.reg;
+    const name = data.name;
+    const dept = data.dept;
+    const merit = data.merit;
+    const email = data.email;
+    const hostel_id = data.hostel_id;
+    const room_id = data.room_id;
+    const phone = data.phone;
+    const role_id= data.role_id;
+
+    console.log(data);
+    db.query(
+        "UPDATE students SET Reg = ? , Name = ? , Dept = ? , Merit = ?, Email =?, Hostel_ID=?, Room_ID =?, Phone =?, Role_ID=? WHERE Email = ?",
+        [reg, name, dept, merit, email, hostel_id, room_id, phone, role_id, email],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                console.log("PREITY UPDATED");
+                res.send(result);
+            }
+        }
+    );
+
+});
 
 app.delete("/delete/students/:reg", (req, res) => {
     const reg = req.params.reg;
@@ -454,6 +483,40 @@ app.get("/getData/student/", (req, res) => {
         }
     });
 });
+
+
+app.get("/getData/user/", (req, res) => {
+    console.log("preityyy");
+    console.log(req.query);
+    let mail = req.query.mail;
+    let role = req.query.role;
+    console.log(role-0);
+    if(role == "2")
+    {
+        console.log("DHUKCHEEEE");
+        db.query(`SELECT * FROM students WHERE Email = ?`, mail ,(err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                res.send(result);
+            }
+        });
+    }
+    else
+    {
+        db.query(`SELECT * FROM administration WHERE Email = ?`, mail ,(err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                res.send(result);
+            }
+        });
+    }
+    
+});
+
 
 app.get("/getData/login", (req, res) => {
     console.log("NOW IN QUERY")

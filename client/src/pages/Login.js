@@ -1,13 +1,16 @@
 
 import 'bootstrap/dist/css/bootstrap.css';
 import React from "react";
-import {useState} from "react";
+import {useState, useEffect, useContext} from "react";
 import validator from 'validator';
 import Axios from 'axios';
+
 import { Alert, Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { PublicContex } from './../components/PublicContext';
 
 function Login() {
+    const [publicData, setPublicData] = useContext(PublicContex);
     const [LoginState, setLoginState] = useState({
         email: "",
         email_err: "* field can not be empty",
@@ -73,6 +76,12 @@ function Login() {
                 }).then((response)=> {
                     if(response.data.result.length > 0)
                     {
+                        console.log(response.data.result[0].Email);
+                        let obj = publicData.user;
+                        obj.email= response.data.result[0].Email;
+                        obj.rule_id= response.data.result[0].Role_ID;
+                        setPublicData({...publicData, user: obj });
+                        console.log(publicData.user);
                         setLoginStatus(true);
                         localStorage.setItem("token",response.data.token);
                         alert("Logged in!");
@@ -138,7 +147,7 @@ function Login() {
                                     setLoginState({...LoginState, password:value, password_err:msg});
                                 
                             }} />
-                            <span className="text-danger">{LoginState.email_err}</span>
+                            <span className="text-danger">{LoginState.password_err}</span>
                         </Form.Group>
                             
                         <div className="my-4">
@@ -168,9 +177,7 @@ function Login() {
                             </button>
                             
                         </div>
-                        <p className="forgot-password text-right my-4">
-                            <a href="http://localhost:3000/forgotpass">Forgot password?</a>
-                        </p> 
+                        
                            
                     </div>
                 </div>
