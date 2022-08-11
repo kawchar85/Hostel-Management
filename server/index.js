@@ -364,7 +364,6 @@ app.put("/update/notice", (req, res) => {
     const data = req.body;
     const hostel_id = data.hostel_id;
     const date_time = data.date_time;
-    //const date_time = moment(data.date_time.format('YYYY-MM-DD HH:mm:ss'));
     const title = data.title;
     const description = data.description;
     const priority = data.priority;
@@ -433,6 +432,23 @@ app.delete("/delete/hostel/:id", (req, res) => {
             res.send("error");
         } else {
             console.log("hostel deleted");
+            res.send("ok");
+        }
+    });
+});
+
+app.delete("/delete/notice/:date&:title", (req, res) => {
+    const date_time = req.params.date;
+    const title = req.params.title;
+    //0000-00-00 00:00:00
+
+    console.log(date_time+" ?? "+title);
+    db.query("DELETE FROM notice_board WHERE DateTime = ? AND Title = ?", [date_time, title], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log("notice deleted");
             res.send("ok");
         }
     });
@@ -558,6 +574,21 @@ app.get("/getData/rooms", (req, res) => {
             console.log(err);
             res.send("error");
         } else {
+            res.send(result);
+        }
+    });
+});
+
+app.get("/getData/notice", (req, res) => {
+    let sortBy = req.query.name;
+    let type = req.query.type;
+    console.log("SELECT * FROM notice_board ORDER BY "+sortBy+" "+type);
+    db.query(`SELECT * FROM notice_board ORDER BY ? ?`, [sortBy, type] ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result);
             res.send(result);
         }
     });
