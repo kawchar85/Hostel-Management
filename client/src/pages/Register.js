@@ -37,7 +37,6 @@ class Register extends Component{
             guardian_phone_err:"* field is required",
             hostels : []
         });
-        let mp = new Map();
         //get Hostel list from Database
     };
     getHostels = async() => {
