@@ -5,48 +5,37 @@
         "childrens": [
             {
                 "title": "Add new",
-                "priority": 1,
+                "priority": 19,
                 "path": "?section=hostel&&action=add"
             },
             {
                 "title": "Remove",
-                "priority": 1,
+                "priority": 19,
                 "path": "?section=hostel&&action=remove"
             },
             {
                 "title": "Update",
-                "priority": 1,
+                "priority": 19,
                 "path": "?section=hostel&&action=update"
             },
             {
                 "title": "Manage Rooms",
-                "priority": 1,
+                "priority": 19,
                 "childrens": [
                     {
                         "title": "Swap Room",
-                        "priority": 1,
-                        "childrens": [
-                            {
-                                "title": "Manual Swap",
-                                "priority": 1,
-                                "path": "#"
-                            },
-                            {
-                                "title": "Swap Request",
-                                "priority": 1,
-                                "path": "#"
-                            }
-                        ]
+                        "priority": 19,
+                        "path": "?section=room&&action=swap"
                     },
                     {
                         "title": "Add Room",
-                        "priority": 1,
-                        "path": "#"
+                        "priority": 19,
+                        "path": "?section=room&&action=add"
                     },
                     {
                         "title": "Remove Room",
-                        "priority": 1,
-                        "path": "#"
+                        "priority": 19,
+                        "path": "?section=room&&action=remove"
                     }
                 ]
             }
@@ -54,66 +43,66 @@
     },
     {
         "title": "Student Manage",
-        "priority": 1,
+        "priority": 18,
         "childrens": [
             {
                 "title": "Add new",
-                "priority": 1,
-                "path": "administration/?section=student&&action=add"
+                "priority": 18,
+                "path": "?section=student&&action=add"
             },
             {
                 "title": "Remove",
-                "priority": 1,
-                "path": "/?section=student&&action=remove"
+                "priority": 18,
+                "path": "?section=student&&action=remove"
             },
             {
                 "title": "Update",
-                "priority": 1,
-                "path": "./?section=student&&action=update"
+                "priority": 18,
+                "path": "?section=student&&action=update"
             }
         ]
     },
     {
         "title": "Employee Manage",
-        "priority": 1,
+        "priority": 17,
         "childrens": [
             {
                 "title": "Add new",
-                "priority": 1,
+                "priority": 17,
                 "childrens": [
                     {
                         "title": "Job offer",
-                        "priority": 1,
+                        "priority": 17,
                         "childrens": [
                             {
                                 "title": "Post New Job",
-                                "priority": 1,
+                                "priority": 17,
                                 "path": "#"
                             },
                             {
                                 "title": "Delete Post",
-                                "priority": 1,
+                                "priority": 17,
                                 "path": "#"
                             },
                             {
                                 "title": "Update Post",
-                                "priority": 1,
+                                "priority": 17,
                                 "path": "#"
                             }
                         ]
                     },
                     {
                         "title": "Check CVs",
-                        "priority": 1,
+                        "priority": 17,
                         "childrens": [
                             {
                                 "title": "Khala",
-                                "priority": 1,
+                                "priority": 17,
                                 "path": "#"
                             },
                             {
                                 "title": "Mama",
-                                "priority": 1,
+                                "priority": 17,
                                 "path": "#"
                             }
                         ]
@@ -122,60 +111,50 @@
             },
             {
                 "title": "Remove",
-                "priority": 1,
+                "priority": 17,
                 "path": "/?section=employee&&action=remove"
             },
             {
                 "title": "Update",
-                "priority": 1,
+                "priority": 17,
                 "path": "/?section=employee&&action=update"
             },
             {
                 "title": "Give Salary",
-                "priority": 1,
+                "priority": 17,
                 "path": "/?section=employee&&action=payment"
             },
             {
                 "title": "Get Employee List",
-                "priority": 1,
-                "path": "./?section=employee&&action=list"
+                "priority": 17,
+                "path": "?section=employee&&action=list"
             }
         ]
     },
     {
         "title": "Notice",
-        "priority": 1,
+        "priority": 17,
         "childrens": [
             {
                 "title": "Post New Notice",
-                "priority": 1,
-                "path": "#"
+                "priority": 17,
+                "path": "?section=notice&&action=add"
             },
             {
                 "title": "Delete Notice",
-                "priority": 1,
-                "path": "#"
+                "priority": 17,
+                "path": "?section=notice&&action=remove"
             },
             {
                 "title": "Update Notice",
-                "priority": 1,
-                "path": "#"
+                "priority": 17,
+                "path": "?section=notice&&action=update"
             }
         ]
     },
     {
         "title": "Complains",
-        "priority": 1,
-        "path": "#"
-    },
-    {
-        "title": "Support",
-        "priority": 1,
-        "path": "#support"
-    },
-    {
-        "title": "Report Bug",
-        "priority": 1,
-        "path": "/#report-bug"
+        "priority": 17,
+        "path": "?section=complain&&action=show"
     }
 ]

@@ -1,0 +1,67 @@
+[
+    {
+        "title": "Add New Hostel",
+        "priority": 19,
+        "path": "?section=hostel&&action=add"
+    },
+    {
+        "title": "Remove Hostel",
+        "priority": 19,
+        "path": "?section=hostel&&action=remove"
+    },
+    {
+        "title": "Update Hostel",
+        "priority": 19,
+        "path": "?section=hostel&&action=update"
+    },
+    {
+        "title": "Swap Room",
+        "priority": 19,
+        "path": "?section=room&&action=swap"
+    },
+    {
+        "title": "Add Room",
+        "priority": 19,
+        "path": "?section=room&&action=add"
+    },
+    {
+        "title": "Remove Room",
+        "priority": 19,
+        "path": "?section=room&&action=remove"
+    },
+    {
+        "title": "Add New Student",
+        "priority": 18,
+        "path": "?section=student&&action=add"
+    },
+    {
+        "title": "Remove Student",
+        "priority": 18,
+        "path": "?section=student&&action=remove"
+    },
+    {
+        "title": "Update Student",
+        "priority": 18,
+        "path": "?section=student&&action=update"
+    },
+    {
+        "title": "Post New Notice",
+        "priority": 17,
+        "path": "?section=notice&&action=add"
+    },
+    {
+        "title": "Delete Notice",
+        "priority": 17,
+        "path": "?section=notice&&action=remove"
+    },
+    {
+        "title": "Update Notice",
+        "priority": 17,
+        "path": "?section=notice&&action=update"
+    },
+    {
+        "title": "Complains",
+        "priority": 16,
+        "path": "?section=complain&&action=show"
+    }
+]

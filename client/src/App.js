@@ -28,7 +28,7 @@ function App() {
   const [hostelList, setHostelList] = useState([]);
   const [user, setUser] = useState(
     {
-      rule_id: -1,
+      rule_id: 20,
       email: "c@gmail.com"
     }
   );

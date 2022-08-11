@@ -196,6 +196,26 @@ app.post("/add/notice", (req, res) => {
     );
 });
 
+app.post("/add/room", (req, res) => {
+    const data = req.body;
+
+    const hostel_id = data.hostel_id;
+    const room_id = data.room_id;
+
+    db.query(
+        "INSERT INTO rooms (Hostel_ID,Room_ID) VALUES (?,?)",
+        [hostel_id, room_id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
 
 app.post("/authMail",(req,res) =>{
     const data = req.body;
@@ -332,6 +352,30 @@ app.put("/update/students", (req, res) => {
     );
 
 });
+
+
+app.put("/update/guardian", (req, res) => {
+    const data = req.body;
+    const reg = data.reg;
+    const phone = data.phone;
+
+
+    db.query(
+        "UPDATE guardian SET Std_reg = ? , Phone = ? WHERE Std_reg = ?",
+        [reg, phone, reg],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                console.log(result);
+                res.send("ok");
+            }
+        }
+    );
+
+});
+
 app.put("/update/hostel", (req, res) => {
     const data = req.body;
     const hostel_id = data.hostel_id;
@@ -453,6 +497,23 @@ app.delete("/delete/notice/:date&:title", (req, res) => {
         }
     });
 });
+app.delete("/delete/room/:hostel_id&:room_id", (req, res) => {
+    const hostel_id = req.params.hostel_id;
+    const room_id = req.params.room_id;
+
+    db.query("DELETE FROM rooms WHERE Hostel_ID = ? AND Room_ID = ?", [hostel_id, room_id], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result.affectedRows);
+            if(result.affectedRows != 0)
+                res.send("ok");
+            else
+                res.send("invalid");
+        }
+    });
+});
 
 app.get("/getData", (req, res) => {
     console.log("now in get Data");
@@ -558,6 +619,32 @@ app.get("/getData/student/room", (req, res) => {
     let hostel_id = req.query.hostel_id;
     let room_id = req.query.room_id;
     db.query(`SELECT * FROM students WHERE Hostel_ID = ? AND Room_ID = ?`, [hostel_id, room_id] ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.get("/getData/guardian", (req, res) => {
+    let reg= req.query.reg;
+    console.log("here "+reg);
+    db.query(`SELECT * FROM guardian WHERE Std_reg = ?`, [reg] ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+app.get("/getData/guardian_info", (req, res) => {
+    let phone= req.query.phone;
+    console.log("here "+phone);
+    db.query(`SELECT * FROM guardian_info WHERE Phone = ?`, [phone] ,(err, result) => {
         if (err) {
             console.log(err);
             res.send("error");

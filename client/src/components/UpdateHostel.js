@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import Axios from 'axios';
 
@@ -8,8 +8,6 @@ export default function UpdateHostel(props) {
     //const [publicData, setPublicData] = useContext(PublicContex);
 
     const hostelData = JSON.parse(props.hostel);
-    console.log("here hostel data::");
-    console.log(hostelData);
 
     const [show, setShow] = useState(false);
     const [finalMsg, setFinalMsg] = useState("");
@@ -33,17 +31,10 @@ export default function UpdateHostel(props) {
         total_seats: "",
     })
 
-    console.log("set: ");
-    console.log(hostel);
-
     const handleSubmit = (event) => {
-
-        console.log("now in handlesubmit2");
         event.preventDefault();
         //check erro?
         const isEmpty = Object.values(error).every(x => x === null || x === "");
-        console.log(isEmpty);
-        console.log(error);
         
         if (isEmpty) {
                 Axios.put("http://localhost:3001/update/hostel", {

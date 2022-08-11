@@ -2,14 +2,14 @@ import React, { useState, useContext } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import Axios from 'axios';
 
-//import { PublicContex } from './PublicContext';
+import { PublicContex } from './PublicContext';
 
 export default function AddHostel() {
-    //const [publicData, setPublicData] = useContext(PublicContex);
+    const [publicData, setPublicData] = useContext(PublicContex);
     const [show, setShow] = useState(false);
 
     const [hostel, setHostel] = useState({
-        id: "-1",
+        id: 1+publicData.hostel.length,
         type: "",
         name: "",
         address: "",
@@ -18,7 +18,6 @@ export default function AddHostel() {
     })
 
     const [error, setError] = useState({
-        id: "",
         type: "* field is required",
         name: "* field is required",
         address: "* field is required",
@@ -30,15 +29,13 @@ export default function AddHostel() {
 
         console.log("now in handlesubmit");
         event.preventDefault();
-//         const value = 1 + publicData.hostel.length;
-//         setHostel({ ...hostel, id: value });
 
         //check erro?
         const isEmpty = Object.values(error).every(x => x === null || x === "");
         console.log(isEmpty);
         if (isEmpty) {
             Axios.post("http://localhost:3001/add/hostel", {
-                hostel_id: hostel.id,
+                hostel_id: 1+publicData.hostel.length,
                 name: hostel.name,
                 type: hostel.type,
                 address: hostel.address,
@@ -47,16 +44,13 @@ export default function AddHostel() {
                 occupied_seats: 0,
             }).then(() => {
                 setShow(true);
-                //alert("hostel added");
                 console.log("hostel added");
             }).catch((e) => alert(e));
         }
-        console.log(hostel);
+        //console.log(hostel);
 
     };
 
-    //hostel ID auto increment hobe.
-    //1+hostelListArray readOnly dewa takbe
     return (
         <>
         <div className="shadow p-4" style={{
@@ -82,10 +76,7 @@ export default function AddHostel() {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3" controlId="hostelID">
                         <Form.Label>Hostel ID</Form.Label>
-                        <Form.Control type="number" value={420} onChange={(event) => {
-                            const value = event.target.value;
-                            setHostel({ ...hostel, id: value });
-                        }} readOnly />
+                        <Form.Control type="number" value={1+publicData.hostel.length} readOnly />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="hostelName">
                         <Form.Label>Name</Form.Label>
