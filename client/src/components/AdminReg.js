@@ -216,39 +216,52 @@ export default function AdminReg () {
         </Form.Group>
 
         <Form.Group className="mb-3">
-            <Form.Label>Designation</Form.Label>
-            <Form.Select onChange={(event) => {
-            const value = event.currentTarget.value;
-            setAdmin({ ...admin, designation: value })
-            let msg = "";
-            if (value.length === 0)
-            msg = "* field is required";
-            setError({ ...error, designation: msg });
-            }}>
-            <option>Select designation</option>
-                <option value="1" >Provost</option>
-                <option value="2">Assistant Provost</option>
-                <option value="3">Supervisor</option>
-            </Form.Select>
-            <span className="text-danger">{error.designation}</span>
-        </Form.Group>
-        <Form.Group className="mb-3">
-            <Form.Label>Role</Form.Label>
-            <Form.Select onChange={(event) => {
-            const value = event.currentTarget.value;
-            setAdmin({ ...admin, role_id: value })
-            let msg = "";
-            if (value.length === 0)
-            msg = "* field is required";
-            setError({ ...error, role: msg });
-            }}>
-            <option>Select designation</option>
-                <option value="1" >Cleaning</option>
-                <option value="2">Seat Allocation</option>
-                <option value="3">Supervison</option>
-            </Form.Select>
-            <span className="text-danger">{error.role}</span>
-        </Form.Group>
+                            <Form.Label>Designation</Form.Label>
+                            <Form.Select  onChange={(event) => {
+                                const value = event.currentTarget.value;
+                        
+                                if(value === "1") setAdmin({ ...admin, designation: value, role_id: 20 });
+                                else setAdmin({ ...admin, designation: value });
+                                console.log("kochu");
+                                console.log(value);
+                                
+                                let msg = "";
+                                if (value.length === 0)
+                                    msg = "* field is required";
+                                    if(value === "1"){
+                                        setError({ ...error, designation: msg, role:""});
+                                    }else{
+                                        setError({ ...error, designation: msg });
+                                    }
+                            }}>
+                                <option>Select designation</option>
+                                <option value="1" >Provost</option>
+                                <option value="2">Assistant Provost</option>
+                                <option value="3">Supervisor</option>
+                            </Form.Select>
+                            <span className="text-danger">{error.designation}</span>
+                        </Form.Group>
+                        {admin.designation !=="1" && (<>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Role</Form.Label>
+                            <Form.Select onChange={(event) => {
+                                const value = event.currentTarget.value;
+                                setAdmin({ ...admin, role_id: value })
+                                let msg = "";
+                                if (value.length === 0)
+                                    msg = "* field is required";
+                                setError({ ...error, role: msg });
+                            }}>
+                                <option>Select designation</option>
+                                <option value="14" >Cleaning</option>
+                                
+                                <option value="16">Supervison</option>
+                                <option value="15">Seat Allocation</option>
+                            </Form.Select>
+                            <span className="text-danger">{error.role}</span>
+                        </Form.Group>
+                        </>
+                        )}
 
 
         <Button variant="primary" type="submit" onClick={addAdmin}>

@@ -19,7 +19,7 @@ export default function SidebarItem({ item }) {
         )
     } else {
   
-        if (getData("user_role_id") === "20" || parseInt(getData("user_role_id")) === item.priority || || item.priority === 10)
+        if (getData("user_role_id") === "20" || parseInt(getData("user_role_id")) === item.priority ||item.priority === 10)
             return (
                 <a href={item.path || "#"} className="sidebar-item plain">
                     {item.title}

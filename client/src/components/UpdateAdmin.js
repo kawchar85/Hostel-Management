@@ -18,7 +18,7 @@ export default function UpdateAdmin(props) {
         email: "",
         hostel_id: "",
         designation: "",
-        role_id: ""
+        role_id: 20
     });
 
     const [error, setError] = useState({
@@ -46,8 +46,12 @@ export default function UpdateAdmin(props) {
     console.log(obj);
     const getAdmin = async () => {
             let data = props.data;
+            console.log("Kudduser data");
+            console.log(typeof(data));
             setAdmin({ ...admin, name: data.Name, email: data.Email, phone: data.Phone, hostel_id: data.Hostel_ID, designation: data.Designation, role_id: data.Role_ID });
-    };
+            console.log(data.Name);
+            
+        };
 
 
     useEffect(() => {
@@ -68,6 +72,7 @@ export default function UpdateAdmin(props) {
         let cnt = 0;
 
         console.log("Admin update");
+        console.log(admin);
         event.preventDefault();
         const isEmpty = Object.values(error).every(x => x === null || x === "");
         console.log(isEmpty);
@@ -109,6 +114,7 @@ export default function UpdateAdmin(props) {
 
 
         }
+        console.log("hijibiji");
         console.log(admin);
 
     };
@@ -193,11 +199,19 @@ export default function UpdateAdmin(props) {
                             <Form.Label>Designation</Form.Label>
                             <Form.Select value={admin.designation} onChange={(event) => {
                                 const value = event.currentTarget.value;
-                                setAdmin({ ...admin, designation: value })
+                                if(value === "1") setAdmin({ ...admin, designation: value, role_id: 20 });
+                                else setAdmin({ ...admin, designation: value });
+                                console.log("kochu");
+                                console.log(value);
+                                
                                 let msg = "";
                                 if (value.length === 0)
                                     msg = "* field is required";
-                                setError({ ...error, designation: msg });
+                                    if(value === "1"){
+                                        setError({ ...error, designation: msg, role:""});
+                                    }else{
+                                        setError({ ...error, designation: msg });
+                                    }
                             }}>
                                 <option>Select designation</option>
                                 <option value="1" >Provost</option>
@@ -206,6 +220,7 @@ export default function UpdateAdmin(props) {
                             </Form.Select>
                             <span className="text-danger">{error.designation}</span>
                         </Form.Group>
+                        {admin.designation !=="1" && (<>
                         <Form.Group className="mb-3">
                             <Form.Label>Role</Form.Label>
                             <Form.Select value={admin.role_id} onChange={(event) => {
@@ -218,11 +233,13 @@ export default function UpdateAdmin(props) {
                             }}>
                                 <option>Select designation</option>
                                 <option value="14" >Cleaning</option>
-                                <option value="5">Seat Allocation</option>
+                                
                                 <option value="16">Supervison</option>
+                                <option value="15">Seat Allocation</option>
                             </Form.Select>
                             <span className="text-danger">{error.role}</span>
                         </Form.Group>
+                        </>)}
 
 
 

@@ -743,6 +743,22 @@ app.get("/getData/student/room", (req, res) => {
     });
 });
 
+app.get("/getData/notice/home", (req, res) => {
+    let id = req.query.id;
+    
+    let sql = "SELECT * FROM notice_board WHERE Priority = "+id+" ORDER BY DateTime DESC";
+
+    db.query(sql,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result);
+            res.send(result);
+        }
+    });
+});
+
 app.get("/getData/guardian", (req, res) => {
     let reg= req.query.reg;
     console.log("here "+reg);

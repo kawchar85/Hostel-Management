@@ -32,7 +32,7 @@ export default function GetAdminData() {
                     setError({ ...error, id: "This email is not registered!" });
                 }
                 else {
-                    let data = JSON.stringify(response.data[0]);
+                    let data = response.data[0];
                     setAdminData(data);
                     setUpdate(true);
                     console.log(data);

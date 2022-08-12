@@ -194,7 +194,10 @@ export default function AddAdmin() {
                             <Form.Label>Designation</Form.Label>
                             <Form.Select onChange={(event) => {
                                 const value = event.currentTarget.value;
-                                setAdmin({ ...admin, designation: value })
+                                if(value === "1") setAdmin({ ...admin, designation: value, role_id: 20 });
+                                else setAdmin({ ...admin, designation: value });
+
+                                
                                 let msg = "";
                                 if (value.length === 0)
                                     msg = "* field is required";
