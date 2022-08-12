@@ -20,6 +20,12 @@ import NoticeListDelete from './NoticeListDelete';
 import ComplainList from './ComplainList';
 import ComplainDelete from './ComplainDelete';
 import AddStudent from './AddStudent';
+import UpdateStudent from './UpdateStudent';
+import GetStudentData from './GetStudentData';
+import RemoveStudent from './RemoveStudent';
+import AddAdmin from './AddAdmin';
+import GetAdminData from './GetAdminData';
+import RemoveAdmin from './RemoveAdmin';
 
 export default function Administration() {
 
@@ -54,7 +60,7 @@ export default function Administration() {
         if (action === "add")
             com = <AddRoom />;
         else if (action === "remove")
-            com = <RemoveRoom />
+            com = <RemoveRoom />;
         else if (action === "swap")
             com = <SwapManual />;
         else
@@ -62,13 +68,13 @@ export default function Administration() {
     }
     else if (section === "notice") {
         if (action === "add")
-            com = <AddNotice />
+            com = <AddNotice />;
         else if (action === "view")
-            com = <NoticeList />
+            com = <NoticeList />;
         else if (action === "remove")
-            com = <NoticeListDelete />
+            com = <NoticeListDelete />;
         else if (action === "update")
-            com = <NoticeListEdit />
+            com = <NoticeListEdit />;
         else
             com = <Error />;
     }
@@ -76,19 +82,27 @@ export default function Administration() {
         if (action === "view")
             com = <ComplainList />;
         else if (action === "remove")
-            com = <ComplainDelete />
+            com = <ComplainDelete />;
         else
             com = <Error />;
     }
     else if (section === "student") {
         if (action === "add")
-            com = <AddStudent />
-        else if (action === "view")
-            com = <NoticeList />
+            com = <AddStudent />;
         else if (action === "remove")
-            com = <NoticeListDelete />
+            com = <RemoveStudent />;
         else if (action === "update")
-            com = <NoticeListEdit />
+            com = <GetAdminData />;
+        else
+            com = <Error />;
+    }
+    else if (section === "admin") {
+        if (action === "add")
+            com = <AddAdmin />;
+        else if (action === "remove")
+            com = <RemoveAdmin />;
+        else if (action === "update")
+            com = <GetAdminData />
         else
             com = <Error />;
     }
