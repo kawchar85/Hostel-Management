@@ -15,6 +15,11 @@ import { PublicContex } from './PublicContext';
 import RemoveHostel from './RemoveHostel';
 import AddRoom from './AddRoom';
 import RemoveRoom from './RemoveRoom';
+import NoticeListEdit from './NoticeListEdit';
+import NoticeListDelete from './NoticeListDelete';
+import ComplainList from './ComplainList';
+import ComplainDelete from './ComplainDelete';
+import AddStudent from './AddStudent';
 
 export default function Administration() {
 
@@ -55,6 +60,38 @@ export default function Administration() {
         else
             com = <Error />;
     }
+    else if (section === "notice") {
+        if (action === "add")
+            com = <AddNotice />
+        else if (action === "view")
+            com = <NoticeList />
+        else if (action === "remove")
+            com = <NoticeListDelete />
+        else if (action === "update")
+            com = <NoticeListEdit />
+        else
+            com = <Error />;
+    }
+    else if (section === "complain") {
+        if (action === "view")
+            com = <ComplainList />;
+        else if (action === "remove")
+            com = <ComplainDelete />
+        else
+            com = <Error />;
+    }
+    else if (section === "student") {
+        if (action === "add")
+            com = <AddStudent />
+        else if (action === "view")
+            com = <NoticeList />
+        else if (action === "remove")
+            com = <NoticeListDelete />
+        else if (action === "update")
+            com = <NoticeListEdit />
+        else
+            com = <Error />;
+    }
     else {
         com = <Error />;
     }
@@ -82,7 +119,6 @@ export default function Administration() {
 
                     {com}
 
-                    <NoticeList />
 
                 </div>
             </div>
