@@ -52,7 +52,7 @@ export default function GetHostelData() {
                         <Form.Label>Hostel ID</Form.Label>
                         <Form.Control type="number" onChange={(event) => {
                             const value = event.target.value;
-                            console.log("dhur baal"+value);
+                            
                             setId(value);
                             let msg = "";
                             if (value.length === 0)
