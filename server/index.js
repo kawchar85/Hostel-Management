@@ -482,6 +482,8 @@ app.put("/update/student", (req, res) => {
 
 });
 
+
+
 app.delete("/delete/students/:reg", (req, res) => {
     const reg = req.params.reg;
     db.query("DELETE FROM students WHERE reg = ?", reg, (err, result) => {
@@ -690,6 +692,32 @@ app.get("/getData/rooms", (req, res) => {
     });
 });
 
+app.put("/update/administration", (req, res) => {
+    const data = req.body;
+    const phone = data.phone;
+    const email = data.email;
+    const name = data.name;
+    const hostel_id = data.hostel_id;
+    const designation = data.designation;
+    const role_id = data.role_id;
+
+    console.log(data);
+    console.log("Sohan khay biri");
+
+    db.query(
+        "UPDATE administration SET email = ?, name = ?, phone = ?, hostel_id = ?, designation = ?, role_id = ? WHERE email = ?",
+        [email, name, phone, hostel_id, designation, role_id,email],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                res.send(result);
+            }
+        }
+    );
+});
+
 app.get("/getData/notice", (req, res) => {
     let sortBy = req.query.name;
     let type = req.query.type;
@@ -706,6 +734,21 @@ app.get("/getData/notice", (req, res) => {
         }
     });
 });
+
+
+app.get("/getData/admin", (req, res) => {
+    let email = req.query.email;
+    db.query(`SELECT * FROM administration WHERE Email = ?`, [email] ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result);
+            res.send(result);
+        }
+    });
+});
+
 
 
 app.listen(3001, () => {
