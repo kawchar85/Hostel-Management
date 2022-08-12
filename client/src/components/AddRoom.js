@@ -20,7 +20,7 @@ export default function AddRoom() {
         console.log("now in handlesubmit");
         event.preventDefault();
 
-        //check erro?
+        //check error
         const isEmpty = Object.values(error).every(x => x === null || x === "");
         console.log(isEmpty);
         if (isEmpty) {
@@ -52,7 +52,7 @@ export default function AddRoom() {
             marginRight: "auto",
         }} >
             <Alert show={show} variant="success">
-                <Alert.Heading>How's it going?!</Alert.Heading>
+                <Alert.Heading>Hostel Management Says</Alert.Heading>
                 <p>
                     Room Added successfully...
                 </p>

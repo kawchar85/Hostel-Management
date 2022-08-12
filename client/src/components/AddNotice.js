@@ -25,9 +25,8 @@ export default function AddNotice() {
 
         event.preventDefault();
 
-        //check erro?
+        //check error
         const isEmpty = Object.values(error).every(x => x === null || x === "");
-        console.log(isEmpty);
         const tm = Date.now();
         if (isEmpty) {
             Axios.post("http://localhost:3001/add/notice", {
@@ -38,7 +37,6 @@ export default function AddNotice() {
                 date_time: tm,
             }).then(() => {
                 setShow(true);
-                console.log("notice added");
             }).catch((e) => alert(e));
         }
 
@@ -53,7 +51,7 @@ export default function AddNotice() {
             marginRight: "auto",
         }} >
             <Alert show={show} variant="success">
-                <Alert.Heading>How's it going?!</Alert.Heading>
+                <Alert.Heading>Hostel Management Says</Alert.Heading>
                 <p>
                     Notice Added successfully...
                 </p>

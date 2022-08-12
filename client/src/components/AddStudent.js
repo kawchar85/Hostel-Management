@@ -40,7 +40,7 @@ class AddStudent extends Component {
         });
     };
     getHostels = async () => {
-        const response = await Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
+        await Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
             let tmp = { hostels: response.data };
             this.setState({ hostels: response.data }, () => {
                 console.log(this.state);
@@ -69,7 +69,6 @@ class AddStudent extends Component {
                     "phone": this.state.phone,
                     "role_id": this.state.roleID
                 }).then(() => {
-                    console.log("student added");
                     cnt++;
                     if (cnt === 4) {
                         this.setState({ ...this.state, show: true });
@@ -80,7 +79,6 @@ class AddStudent extends Component {
                     "address": this.state.guardian_address,
                     "phone": this.state.guardian_phone
                 }).then(() => {
-                    console.log("guardian info added");
                     cnt++;
                     if (cnt === 4) {
                         this.setState({ ...this.state, show: true });
@@ -90,7 +88,6 @@ class AddStudent extends Component {
                     "std_reg": this.state.reg,
                     "phone": this.state.guardian_phone
                 }).then(() => {
-                    console.log("guardian added");
                     cnt++;
                     if (cnt === 4) {
                         this.setState({ ...this.state, show: true });
@@ -101,7 +98,6 @@ class AddStudent extends Component {
                     "role_id": this.state.roleID,
                     "email": this.state.email
                 }).then(() => {
-                    console.log("login added");
                     cnt++;
                     if (cnt === 4) {
                         this.setState({ ...this.state, show: true });
@@ -109,6 +105,7 @@ class AddStudent extends Component {
                 });
             }
             else if (response.data === "Registered") {
+               
                 alert("This registration number already exists!");
             }
             else {
@@ -137,7 +134,7 @@ class AddStudent extends Component {
                     }} >
 
                         <Alert show={this.state.show} variant="success">
-                            <Alert.Heading>How's it going?!</Alert.Heading>
+                            <Alert.Heading>Hostel Management Says</Alert.Heading>
                             <p>
                                 Student Added successfully...
                             </p>

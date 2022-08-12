@@ -5,7 +5,7 @@ import items2 from "../data/administration_sidebar/sidebar_2.json"
 import { storeData, getData, eraseData} from '../App';
 
 export default function AdministrationSidebar() {
-    if(getData("user_role_id") === 20)
+    if(getData("user_role_id") === "20")
         return (
             <div className="sidebar">
                 {items.map((item, index) => <SidebarItem key={index} item={item} />)}

@@ -32,7 +32,6 @@ export default function AddHostel() {
 
         //check erro?
         const isEmpty = Object.values(error).every(x => x === null || x === "");
-        console.log(isEmpty);
         if (isEmpty) {
             Axios.post("http://localhost:3001/add/hostel", {
                 hostel_id: 1+publicData.hostel.length,
@@ -44,11 +43,8 @@ export default function AddHostel() {
                 occupied_seats: 0,
             }).then(() => {
                 setShow(true);
-                console.log("hostel added");
             }).catch((e) => alert(e));
         }
-        //console.log(hostel);
-
     };
 
     return (
@@ -60,7 +56,7 @@ export default function AddHostel() {
             marginRight: "auto",
         }} >
             <Alert show={show} variant="success">
-                <Alert.Heading>How's it going?!</Alert.Heading>
+                <Alert.Heading>Hostel Management Says</Alert.Heading>
                 <p>
                     Hostel Added successfully...
                 </p>
