@@ -127,14 +127,14 @@ app.post("/add/administration", (req, res) => {
 
 app.post("/add/complain",(req,res)=>{
     const data = req.body;
-    const datetime = data.timestamp;
+    const title = data.title;
     const std_reg = data.std_reg;
     const tag = data.tag;
     const image= data.photo;
     const description = data.description;
     db.query(
-        "INSERT INTO complains (datetime, std_reg, tag, image, description) VALUES (?,?,?,?,?)",
-        [datetime,std_reg, tag, image, description],
+        "INSERT INTO complains (title, std_reg, tag, image, description) VALUES (?,?,?,?,?)",
+        [title,std_reg, tag, image, description],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -523,6 +523,21 @@ app.delete("/delete/notice/:date&:title", (req, res) => {
         }
     });
 });
+app.delete("/delete/complain/:date&:reg", (req, res) => {
+    const date_time = req.params.date;
+    const reg = req.params.reg;
+
+    db.query("DELETE FROM complains WHERE DateTime = ? AND Std_reg = ?", [date_time, reg], (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log("complain deleted");
+            console.log(result);
+            res.send("ok");
+        }
+    });
+});
 app.delete("/delete/room/:hostel_id&:room_id", (req, res) => {
     const hostel_id = req.params.hostel_id;
     const room_id = req.params.room_id;
@@ -587,6 +602,17 @@ app.get("/getData/student/", (req, res) => {
     });
 });
 
+app.get("/getData/student/reg", (req, res) => {
+    let email = req.query.email;
+    db.query(`SELECT * FROM students WHERE Email = ?`, email ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            res.send(result);
+        }
+    });
+});
 
 app.get("/getData/user/", (req, res) => {
     console.log("preityyy");
@@ -749,7 +775,20 @@ app.get("/getData/admin", (req, res) => {
     });
 });
 
-
+app.get("/getData/complain", (req, res) => {
+    let sortBy = req.query.name;
+    let type = req.query.type;
+    
+    let sql = "SELECT * FROM complains ORDER BY "+sortBy+" "+type;
+    db.query(sql,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            res.send(result);
+        }
+    });
+});
 
 app.listen(3001, () => {
     console.log("Server is running on port 3001");
