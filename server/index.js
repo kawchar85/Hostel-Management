@@ -746,7 +746,7 @@ app.get("/getData/student/room", (req, res) => {
 app.get("/getData/notice/home", (req, res) => {
     let id = req.query.id;
     
-    let sql = "SELECT * FROM notice_board WHERE Priority = "+id+" ORDER BY DateTime DESC";
+    let sql = "SELECT * FROM notice_board WHERE Hostel_ID = "+id+" OR Hostel_ID = -1 ORDER BY DateTime DESC";
 
     db.query(sql,(err, result) => {
         if (err) {

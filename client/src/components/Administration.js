@@ -43,9 +43,9 @@ export default function Administration() {
     if (query.get("section") !== "")
         section = query.get("section")
 
-    let com = <AddHostel />;
+    let com = <NoticeList />;
     if (section === null)
-        com = <AddHostel />;
+        com = <NoticeList />;
     else if (section === "hostel") {
         if (action === "add")
             com = <AddHostel />;

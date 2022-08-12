@@ -9,7 +9,10 @@ export default function Home() {
   const [notices, setNotices] = useState([]);
   const getNotices = () => {
 
-    let role_id = getData('user_role_id');
+    let role_id = -1;
+    if(getData('user_role_id')){
+      role_id = getData('user_role_id');
+    }
     console.log("home page o rule paisi = "+ role_id);
     Axios.get("http://localhost:3001/getData/notice/home", { params: { id: role_id } }).then((response) => {
       setNotices(response.data);

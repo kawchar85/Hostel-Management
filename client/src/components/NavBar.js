@@ -22,7 +22,7 @@ export default function NavBar(props) {
         return (getData("user_role_id")>0);
     }
     function isAdministration() {
-        return getData("user_role_id")>15;
+        return getData("user_role_id")>10;
     }
 
     const onClick = (event) => {
