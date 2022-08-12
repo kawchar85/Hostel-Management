@@ -50,9 +50,9 @@
         "path": "?section=notice&&action=add"
     },
     {
-        "title": "Delete Notice",
+        "title": "View Notices",
         "priority": 17,
-        "path": "?section=notice&&action=remove"
+        "path": "?section=notice&&action=view"
     },
     {
         "title": "Update Notice",
@@ -60,8 +60,18 @@
         "path": "?section=notice&&action=update"
     },
     {
-        "title": "Complains",
+        "title": "Delete Notice",
+        "priority": 17,
+        "path": "?section=notice&&action=remove"
+    },
+    {
+        "title": "View Complains",
         "priority": 16,
-        "path": "?section=complain&&action=show"
+        "path": "?section=complain&&action=view"
+    },
+    {
+        "title": "Delete Complain",
+        "priority": 16,
+        "path": "?section=complain&&action=remove"
     }
 ]
