@@ -38,26 +38,55 @@ const [std, setStd] = useState({
   guardian_name: null,
   guardian_address:null,
   guardian_phone: null,
-})
+});
+const [guardian, setGuardian] = useState({
+    phone:null,
+    address:null,
+    name:null
+  })
 
 const[hostel, setHostel] = useState({
     hostels:[]
 })
+let x = 9;
+
+const[prev, setPrev] = useState({
+    val:15
+})
+
 
 let obj = publicData.user;
 obj.email=publicData.user.email;
-obj.rule_id= 2; //publicData.user.rule_id;
+obj.rule_id= 2;
 const getStudent = async() => {
     const response= await Axios.get("http://localhost:3001/getData/user", { params: { mail: publicData.user.email, role:publicData.user.rule_id } }).then((response) => {
-            let data=response.data[0];
-            setStd({...std,reg:data.Reg,email:data.Email,std_name:data.Name,dept:data.Dept,merit:data.Merit,hostelID:data.Hostel_ID,roomID:data.Room_ID,phone:data.Phone});
-            console.log(data.Phone + " preity");
-            console.log(std.reg);
-            console.log(data);
-        });
-        console.log(std);
-        
+        let data=response.data[0];
+        setStd({...std,reg:data.Reg,email:data.Email,std_name:data.Name,dept:data.Dept,merit:data.Merit,hostelID:data.Hostel_ID,roomID:data.Room_ID,phone:data.Phone});
+        x=data.Reg;
+    });
+    getGuardian();
+};
 
+
+const getGuardian = async() => {
+    const response= await Axios.get("http://localhost:3001/getData/guardian", { params: { reg:x} }).then((response) => {
+        let data=response.data[0];
+        setGuardian({...guardian, phone:data.Phone});
+        x=data.Phone;
+        setPrev({...prev,val:data.Phone});
+        getGuardianInfo();
+    });
+    
+};
+
+
+const getGuardianInfo = async() => {
+    console.log("now key hocche "+x);
+    const response= await Axios.get("http://localhost:3001/getData/guardian_info", { params: { phone:x } }).then((response) => {
+        let data=response.data[0];
+        setGuardian(latestInfoState => { return {...latestInfoState, address:data.Address, name: data.Name } });
+      //  setGuardian({...guardian, address:data.Address, name: data.Name});
+    });
 };
 
     useEffect(()=> {
@@ -103,6 +132,35 @@ const getStudent = async() => {
                 }
                 setShow(true);
             }).catch((e) => alert(e.response.data));
+
+            Axios.put("http://localhost:3001/update/guardian_info", {
+                "phone": guardian.phone,
+                "address": guardian.address,
+                "name": guardian.name,
+                "prev_phone": prev.val
+            }).then((response) => {
+                console.log(response.data);
+                if(response.data === "error"){
+                    setFinalMsg("Something Error!!");
+                } else {
+                    setFinalMsg("User Updated successfully...");
+                    console.log("huhuhu "+ prev.val);
+                }
+                setShow(true);
+            }).catch((e) => alert(e.response.data));
+
+            Axios.put("http://localhost:3001/update/guardian", {
+                "reg":std.reg,
+                "phone": guardian.phone
+            }).then((response) => {
+                if(response.data === "error"){
+                    setFinalMsg("Something Error!!");
+                } else {
+                    setFinalMsg("guardian Updated successfully...");
+                    console.log("huhuhu "+ prev.val);
+                }
+                setShow(true);
+            }).catch((e) => alert(e.response.data));
             
     }
     console.log(std);
@@ -135,21 +193,7 @@ const getStudent = async() => {
             <Form.Label>Registration No</Form.Label>
             <Form.Control type="number" value={std.reg} readOnly />
         </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
-            <Form.Control type="text" value={std.password} onChange={(event) => {
-              const value = event.target.value;
-              let msg = "";
-              if (value.length === 0)
-              msg = "* field is required";
-              else if (value.length < 5)
-              msg = "Password should be at least 5 digit!";
-              setStd({...std,password:value});
-              setError({...error,password_err:msg});
-              }} 
-            />
-          <span className="text-danger">{error.password_err}</span>
-        </Form.Group>
+        
         <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" value = {std.std_name} onChange={(event) => {
@@ -245,35 +289,35 @@ const getStudent = async() => {
         </Form.Group>
         <Form.Group className="mb-3">
             <Form.Label>Guardian name</Form.Label>
-            <Form.Control type="text" value={std.guardian_name} placeholder="guardian name" onChange={(event) => {
+            <Form.Control type="text" value={guardian.name} placeholder="guardian name" onChange={(event) => {
                 const value = event.target.value;
                 let msg = "";
                 if(value.length === 0) msg="* filed is required";
-                setStd({...std,guardian_name:value});
+                setGuardian({...guardian,name:value});
                 setError({...error,guardian_name_err:msg});
             }} />
             <span className="text-danger">{error.guardian_name_err}</span>
         </Form.Group>
         <Form.Group className="mb-3">
             <Form.Label>Guardian address</Form.Label>
-            <Form.Control type="text" value={std.guardian_address} placeholder="guardian address" onChange={(event) => {
+            <Form.Control type="text" value={guardian.address} placeholder="guardian address" onChange={(event) => {
                 const value = event.target.value;
                 let msg = "";
                 if(value.length === 0) msg="* filed is required";    
-                setStd({...std,guardian_address:value});
+                setGuardian({...guardian,address:value});
                 setError({...error, guardian_address_err:msg})
             }} />
             <span className="text-danger">{error.guardian_address_err}</span>
         </Form.Group>
         <Form.Group className="mb-3">
             <Form.Label>Guardian_phone</Form.Label>
-            <Form.Control type="text" value={std.guardian_phone} placeholder="guardian phone" onChange={(event) => {
+            <Form.Control type="text" value={guardian.phone} placeholder="guardian phone" onChange={(event) => {
                 const value = event.target.value;
                 let msg = "";
                 if(value.length === 0) msg="* filed is required";
                 if (value.length !== 11)
                 msg = "Phone number should be 11 digit!";
-                setStd({...std,guardian_phone:value});
+                setGuardian({...guardian,phone:value});
                 setError({...error, guardian_phone_err:msg});
             }} />
             <span className="text-danger">{error.guardian_phone_err}</span>
