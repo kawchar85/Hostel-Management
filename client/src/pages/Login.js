@@ -5,6 +5,7 @@ import {useState, useEffect, useContext} from "react";
 import validator from 'validator';
 import { useNavigate } from "react-router-dom"
 import Axios from 'axios';
+import { storeData, getData, eraseData} from '../App';
 
 import { Alert, Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
@@ -84,9 +85,15 @@ function Login() {
                         obj.email= response.data.result[0].Email;
                         obj.rule_id= response.data.result[0].Role_ID;
                         setPublicData({...publicData, user: obj });
+                        storeData("user_email", obj.email);
+                        console.log("hola "+getData("user_email"));
+                        storeData("user_role_id", response.data.result[0].Role_ID);
+                        console.log("hola "+getData("user_role_id"));
                         console.log(publicData.user);
                         setLoginStatus(true);
                         localStorage.setItem("token",response.data.token);
+                        console.log("last check");
+                        console.log(obj);
                         navigate(`/home`);
                     }
                     else

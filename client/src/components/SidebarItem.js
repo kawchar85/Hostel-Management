@@ -1,10 +1,8 @@
 import { useState, useContext } from "react"
-import { PublicContex } from './PublicContext';
+import { storeData, getData, eraseData} from '../App';
 
 export default function SidebarItem({ item }) {
     const [open, setOpen] = useState(false)
-    const [publicData, setPublicData] = useContext(PublicContex);
-
     if (item.childrens) {
         return (
             <div className={open ? "sidebar-item open" : "sidebar-item"}>
@@ -20,7 +18,7 @@ export default function SidebarItem({ item }) {
             </div>
         )
     } else {
-        if (publicData.user.rule_id === 20 || publicData.user.rule_id === item.priority)
+        if (getData("user_role_id") === 20 || getData("user_role_id") === item.priority)
             return (
                 <a href={item.path || "#"} className="sidebar-item plain">
                     {item.title}

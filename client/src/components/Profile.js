@@ -3,6 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap'
 import Axios from 'axios';
 import { PublicContex } from './PublicContext';
 import jwt_decode from "jwt-decode";
+import { storeData, getData, eraseData} from '../App';
 
 export default function Profile() {
 
@@ -55,11 +56,11 @@ const[prev, setPrev] = useState({
 })
 
 
-let obj = publicData.user;
-obj.email=publicData.user.email;
-obj.rule_id= 2;
+let obj = null;
+obj.email=getData("user_email");
+obj.role_id= getData("user_role_id");
 const getStudent = async() => {
-    const response= await Axios.get("http://localhost:3001/getData/user", { params: { mail: publicData.user.email, role:publicData.user.rule_id } }).then((response) => {
+    const response= await Axios.get("http://localhost:3001/getData/user", { params: { mail: obj.email, role:obj.role_id } }).then((response) => {
         let data=response.data[0];
         setStd({...std,reg:data.Reg,email:data.Email,std_name:data.Name,dept:data.Dept,merit:data.Merit,hostelID:data.Hostel_ID,roomID:data.Room_ID,phone:data.Phone});
         x=data.Reg;
@@ -122,7 +123,7 @@ const getGuardianInfo = async() => {
                 "hostel_id": std.hostelID,
                 "room_id": std.roomID,
                 "phone": std.phone,
-                "role_id":publicData.user.ule_id
+                "role_id":getData("user_role_id")
     
             }).then((response) => {
                 if(response.data === "error"){

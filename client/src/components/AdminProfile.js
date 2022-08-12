@@ -1,15 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import Axios from 'axios';
-import { PublicContex } from './PublicContext';
 import jwt_decode from "jwt-decode";
+import { storeData, getData, eraseData} from '../App';
+import { PublicContex } from './PublicContext';
+
 
 export default function Profile() {
 
   const [show, setShow] = useState(false);
   const [finalMsg, setFinalMsg] = useState("");
 
-const [publicData, setPublicData] = useContext(PublicContex);
+  const [publicData, setPublicData] = useContext(PublicContex);
+
 
 const [admin, setAdmin] = useState({
     name: "",
@@ -38,11 +41,11 @@ const[prev, setPrev] = useState({
 })
 
 
-let obj = publicData.user;
-obj.email="Konok@gmail.com"               //publicData.user.email;
-obj.rule_id= 19;
+let obj = null;
+obj.email= getData("user_email");              
+obj.role_id= getData("user_role_id");
 const getAdmin = async() => {
-    const response= await Axios.get("http://localhost:3001/getData/user", { params: { mail: publicData.user.email, role:publicData.user.rule_id } }).then((response) => {
+    const response= await Axios.get("http://localhost:3001/getData/user", { params: { mail: obj.email, role: obj.role_id } }).then((response) => {
         let data=response.data[0];
         setAdmin({...admin,name:data.Name,email:data.Email,phone:data.Phone,hostel_id:data.Hostel_ID,designation:data.Designation,role_id:data.Role_ID});
         console.log("DEBUGGINGGGG");

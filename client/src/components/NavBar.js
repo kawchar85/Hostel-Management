@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Navbar, Nav, Container, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import SingleHostel from './SingleHostel';
+import { storeData, getData, eraseData} from '../App';
 
 import { PublicContex } from './PublicContext';
 
@@ -16,10 +17,18 @@ export default function NavBar(props) {
     }
 
     function isLogged() {
-        return (publicData.user.rule_id>0);
+        console.log("Ultimate check");
+        console.log(getData("user_role_id")>0);
+        return (getData("user_role_id")>0);
     }
     function isAdministration() {
-        return publicData.user.rule_id>15;
+        return getData("user_role_id")>15;
+    }
+
+    const onClick = (event) => {
+        storeData("user_role_id", -1);
+        storeData("user_email", "");
+        console.log(getData("user_role_id"));
     }
 
     let page1, page2;
@@ -66,7 +75,12 @@ export default function NavBar(props) {
                             {!isLogged() && (
                                 <Nav.Link href={"/" + page1}>{page1}</Nav.Link>
                             ) }
-                            <Nav.Link href={"/" + page2}>{page2}</Nav.Link>
+                            {isLogged() && (
+                                <Nav.Link onClick={onClick} href={"/home"}>{page2}</Nav.Link>
+                            )}
+                            {!isLogged() && (
+                                <Nav.Link href={"/" + page2}>{page2}</Nav.Link>
+                            )}
 
                             {!isAdministration() && isLogged() && (
                                 <Nav.Link href={"/complain"}>Complain</Nav.Link>

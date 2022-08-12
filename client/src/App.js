@@ -24,7 +24,24 @@ import { PublicContex } from "./components/PublicContext";
 //import {useContext } from 'react'
 //import { PublicContex } from './PublicContext';
 //const [publicData, setPublicData] = useContext(PublicContex);
-function App() {
+
+
+//Stores data into local storage
+export function storeData(name, data) {
+  localStorage.setItem(name, data);
+}
+//Access data from local storage
+export function getData(name) {
+  return localStorage.getItem(name);
+}
+//Erases data from local storage
+export function eraseData(name) {
+  console.log(localStorage.getItem(name));
+  localStorage.removeItem(name);
+}
+
+
+export default function App() {
 
   const [hostelList, setHostelList] = useState([]);
   const [user, setUser] = useState(
@@ -102,4 +119,3 @@ function App() {
   );
 }
 
-export default App;
