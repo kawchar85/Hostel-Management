@@ -30,10 +30,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `complains` (
   `DateTime` datetime NOT NULL DEFAULT current_timestamp(),
   `Std_reg` int(10) NOT NULL,
+  `Title` varchar(255) NOT NULL,
   `Tag` varchar(100) NOT NULL,
-  `Image` longblob NOT NULL,
+  `Image` varchar(255) DEFAULT NULL,
   `Description` varchar(1024) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
