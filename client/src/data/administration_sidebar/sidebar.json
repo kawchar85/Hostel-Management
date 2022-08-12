@@ -16,7 +16,7 @@
             {
                 "title": "Update Admin",
                 "priority": 19,
-                "path": "?section=update&&action=update"
+                "path": "?section=admin&&action=update"
             }
         ]
     },
