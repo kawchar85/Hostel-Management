@@ -375,6 +375,31 @@ app.put("/update/guardian", (req, res) => {
     );
 
 });
+
+
+app.put("/update/login", (req, res) => {
+    const data = req.body;
+    const email = data.email;
+    const role_id = data.role_id;
+
+
+    db.query(
+        "UPDATE login SET Role_ID = ? WHERE Email = ?",
+        [role_id, email],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                console.log(result);
+                res.send("ok");
+            }
+        }
+    );
+
+});
+
+
 app.put("/update/guardian_info", (req, res) => {
     const data = req.body;
     const phone = data.phone;

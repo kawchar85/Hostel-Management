@@ -18,7 +18,9 @@ export default function SidebarItem({ item }) {
             </div>
         )
     } else {
-        if (getData("user_role_id") === 20 || getData("user_role_id") === item.priority)
+        console.log("KAWCHAR ER MATHAY KAUWA");
+        console.log(typeof(getData("user_role_id")));
+        if (getData("user_role_id") === "20" || parseInt(getData("user_role_id")) === item.priority)
             return (
                 <a href={item.path || "#"} className="sidebar-item plain">
                     {item.title}

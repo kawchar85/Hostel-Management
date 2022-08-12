@@ -41,9 +41,11 @@ const[prev, setPrev] = useState({
 })
 
 
-let obj = null;
+let obj = {"email":"", "role_id":""};
 obj.email= getData("user_email");              
 obj.role_id= getData("user_role_id");
+
+console.log(obj);
 const getAdmin = async() => {
     const response= await Axios.get("http://localhost:3001/getData/user", { params: { mail: obj.email, role: obj.role_id } }).then((response) => {
         let data=response.data[0];
@@ -70,6 +72,7 @@ useEffect(()=> {
 
 
   const handleSubmit = (event) => {
+    let cnt=0;
 
     console.log("Admin update");
     event.preventDefault();
@@ -77,22 +80,41 @@ useEffect(()=> {
     console.log(isEmpty);
     console.log(error);
     if (isEmpty) {
+
             Axios.put("http://localhost:3001/update/administration", {
                 "name":admin.name,
                 "designation": admin.designation,
                 "email": admin.email,
                 "hostel_id": admin.hostel_id,
                 "phone": admin.phone,
-                "role_id":admin.rule_id
+                "role_id":admin.role_id
     
             }).then((response) => {
                 if(response.data === "error"){
                     setFinalMsg("Something Error!!");
                 } else {
                     setFinalMsg("Admin Updated successfully...");
+                    cnt++;
+                    if(cnt===2)setShow(true);
                 }
-                setShow(true);
+            //    setShow(true);
             }).catch((e) => alert(e.response.data));
+
+            Axios.put("http://localhost:3001/update/login", {
+                "email": admin.email,
+                "role_id":admin.role_id
+    
+            }).then((response) => {
+                if(response.data === "error"){
+                    setFinalMsg("Something Error!!");
+                } else {
+                    setFinalMsg("Admin Updated successfully...");
+                    cnt++;
+                    if(cnt===2)setShow(true);
+                }
+            }).catch((e) => alert(e.response.data));
+
+
     }
     console.log(admin);
 
