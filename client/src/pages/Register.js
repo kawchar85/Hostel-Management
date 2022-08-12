@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React, { useEffect } from "react";
 import { Alert, Container, Form, Button } from 'react-bootstrap';
 import validator from 'validator';
+import { useNavigate } from "react-router-dom"
 import Axios from 'axios';
 import SingleHostel from '../components/SingleHostel';
 import { Component } from 'react';
@@ -35,10 +36,12 @@ class Register extends Component{
             guardian_address_err:"* field is required",
             guardian_phone: "",
             guardian_phone_err:"* field is required",
-            hostels : []
+            hostels : [],
+            show: false
         });
         //get Hostel list from Database
     };
+
     getHostels = async() => {
         const response= await Axios.get("http://localhost:3001/getData/", { params: { table: "hostel" } }).then((response) => {
             let tmp = {hostels : response.data};
@@ -58,7 +61,7 @@ class Register extends Component{
         Axios.get("http://localhost:3001/getData/student", { params: { reg: this.state.reg } }).then((response) => {
             if(response.data === "notRegistered")
             {
-                console.log(" preityyy  "+ response.data );
+                let cnt = 0;
                 Axios.post("http://localhost:3001/add/students", {
                     "reg":this.state.reg,
                     "name":this.state.std_name,
@@ -70,20 +73,32 @@ class Register extends Component{
                     "phone": this.state.phone,
                     "role_id":this.state.roleID
                 }).then(()=> {
-                    console.log("student added")
+                    console.log("student added");
+                    cnt++;
+                    if (cnt === 4) {
+                        this.setState({ ...this.state, show: true });
+                    }
                 } );
                 Axios.post("http://localhost:3001/add/guardian_info", {
                     "name": this.state.guardian_name,
                     "address":this.state.guardian_address,
                     "phone": this.state.guardian_phone
                 }).then(()=> {
-                    console.log("guardian info added")
+                    console.log("guardian info added");
+                    cnt++;
+                    if (cnt === 4) {
+                        this.setState({ ...this.state, show: true });
+                    }
                 } ); 
                 Axios.post("http://localhost:3001/add/guardian", {
                     "std_reg":this.state.reg,
                     "phone": this.state.guardian_phone
                 }).then(()=> {
                     console.log("guardian added")
+                    cnt++;
+                    if (cnt === 4) {
+                        this.setState({ ...this.state, show: true });
+                    }
                 } );
                 Axios.post("http://localhost:3001/add/login", {
                     "password":this.state.password,
@@ -91,6 +106,10 @@ class Register extends Component{
                     "email": this.state.email
                 }).then(()=> {
                     console.log("login added")
+                    cnt++;
+                    if (cnt === 4) {
+                        this.setState({ ...this.state, show: true });
+                    }
                 } ); 
             }
             else if(response.data === "Registered") {
@@ -113,7 +132,7 @@ class Register extends Component{
             <Container className="my-5">
                 <div className="container">
                     <div className="row justify-content-center align-items-center">
-                        <h4>Register for student</h4>
+                    
                         
                         <div className="shadow p-4" style={{
                             width: "60%",
@@ -121,6 +140,29 @@ class Register extends Component{
                             marginLeft: "auto",
                             marginRight: "auto",
                         }} >
+                        <Alert show={this.state.show} variant="success">
+                            <Alert.Heading>How's it going?!</Alert.Heading>
+                            <p>
+                                Student Added successfully...
+                            </p>
+                            <hr />
+                            <div className="d-flex justify-content-end">
+                                <Button onClick={() => { this.setState({ ...this.state, show: false }); window.location.href = "http://localhost:3000/Home"; }} variant="outline-success">
+                                    Close!
+                                </Button>
+                            </div>
+                        </Alert>
+                        {!this.state.show && (
+                            <>
+                        <div style={{
+                            textShadow: "#f9fafb 0px 1px 0px, #0d6efd 3px 3px 3px",
+                            textAlign: "center",
+                            color: "#666",
+                            margin: "0 0 30px 0",
+                            letterSpacing: "4px",
+                            font: "normal 30px/2 Segoe Print,Verdana, Helvetica",
+                            position: "relative",
+                        }} > <h4>REGISTER STUDENT </h4> </div>
                             <Form.Group className="mb-3">
                                 <Form.Label>Registration No</Form.Label>
                                 <Form.Control type="text" placeholder="Reg No" onChange={(event) => {
@@ -299,7 +341,9 @@ class Register extends Component{
                                 <p className="text-right my-4">
                                     <a href="http://localhost:3000/AdminReg">Not a student??</a>
                                 </p>
+                            </>)}
                         </div>
+                        
                     </div>
                 </div>
             </Container>

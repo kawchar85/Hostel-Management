@@ -12,7 +12,8 @@ export default function AdminReg () {
         email:"",
         hostel_id:"",
         designation:"",
-        role_id: ""
+        role_id: "",
+        show: false
     });
 
     const [error, setError] = useState({
@@ -46,10 +47,10 @@ export default function AdminReg () {
     const addAdmin =()=> {
 
         Axios.get("http://localhost:3001/getData/login", { params: { mail: admin.email } }).then((response) => {
-            console.log("Amar nam preity");
             console.log(response.data);
             if(response.data === "notRegistered")
             {
+                let cnt = 0;
                 const isEmpty = Object.values(error).every(x => x === null || x === "");
                 if(isEmpty) {
                 Axios.post("http://localhost:3001/add/administration", {
@@ -61,6 +62,10 @@ export default function AdminReg () {
                 "role_id":admin.role_id,
             }).then( ()=> {
                 console.log("look it works!!");
+                cnt++;
+                    if (cnt === 2) {
+                        setAdmin({ ...admin, show: true });
+                    }
             }).catch((e)=>{
                 alert("Something went wrong, try again");
                 console.log(e);
@@ -70,7 +75,11 @@ export default function AdminReg () {
                 "role_id": admin.role_id,
                 "email": admin.email
             }).then(()=> {
-                console.log("login added")
+                console.log("login added");
+                cnt++;
+                    if (cnt === 2) {
+                        setAdmin({ ...admin, show: true });
+                    }
             } ); 
             }
             else alert("No field can remain empty");
@@ -87,7 +96,7 @@ export default function AdminReg () {
 
     return(
         <>
-        {JSON.stringify(admin)}
+        
         <div className="shadow p-4" style={{
             width: "60%",
             border: "3px solid lightGray",
@@ -95,10 +104,32 @@ export default function AdminReg () {
             marginRight: "auto",
             marginTop: "30px",
         }} >
+        <Alert show={admin.show} variant="success">
+                            <Alert.Heading>How's it going?!</Alert.Heading>
+                            <p>
+                                Admin Added successfully...
+                            </p>
+                            <hr />
+                            <div className="d-flex justify-content-end">
+                                <Button onClick={() => { setAdmin({ ...admin, show: false }); window.location.href = "http://localhost:3000/Home"; }} variant="outline-success">
+                                    Close!
+                                </Button>
+                            </div>
+                        </Alert>
 
-        
+                        {!admin.show && (
+                            <>
 
         <Form onSubmit={addAdmin}>
+        <div style={{
+            textShadow: "#f9fafb 0px 1px 0px, #0d6efd 3px 3px 3px",
+            textAlign: "center",
+            color: "#666",
+            margin: "0 0 30px 0",
+            letterSpacing: "4px",
+            font: "normal 30px/2 Segoe Print,Verdana, Helvetica",
+            position: "relative",
+        }} > <h4>REGISTER ADMIN </h4> </div>
             <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" placeholder="Name" onChange={(event) => {
@@ -226,6 +257,8 @@ export default function AdminReg () {
                     <p className="text-right my-4">
                                 <a href="http://localhost:3000/Signup">Not an admin??</a>
                             </p>
+
+                            </>)}
 
         </div>
 

@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from "react";
 import {useState, useEffect, useContext} from "react";
 import validator from 'validator';
+import { useNavigate } from "react-router-dom"
 import Axios from 'axios';
 
 import { Alert, Container, Form, Button } from 'react-bootstrap';
@@ -20,6 +21,8 @@ function Login() {
 
     });
     const[LoginStatus, setLoginStatus] = useState(false);
+    const navigate = useNavigate()
+
     
 /*
     const auth =()=> {
@@ -84,7 +87,7 @@ function Login() {
                         console.log(publicData.user);
                         setLoginStatus(true);
                         localStorage.setItem("token",response.data.token);
-                        alert("Logged in!");
+                        navigate(`/home`);
                     }
                     else
                     {
@@ -105,7 +108,7 @@ function Login() {
         <Container className="my-5">
             <div className="container">
                 <div className="row justify-content-center align-items-center">
-                    <h4>Login</h4>
+                    
                     
                     <div className="shadow p-4" style={{
                         width: "60%",
@@ -113,6 +116,15 @@ function Login() {
                         marginLeft: "auto",
                         marginRight: "auto",
                     }} >
+                    <div style={{
+                        textShadow: "#f9fafb 0px 1px 0px, #0d6efd 3px 3px 3px",
+                        textAlign: "center",
+                        color: "#666",
+                        margin: "0 0 30px 0",
+                        letterSpacing: "4px",
+                        font: "normal 30px/2 Segoe Print,Verdana, Helvetica",
+                        position: "relative",
+                    }} > <h4>USER LOGIN </h4> </div>
                     <Form.Group className="mb-3">
                         <Form.Label>Email Address</Form.Label>
                             <Form.Control type="text" placeholder="email" onChange={(event) => {
@@ -144,6 +156,7 @@ function Login() {
                                     const value = event.target.value;
                                     let msg = "";
                                     if(value.length === 0) msg="* field is required";
+                                    else if(value.length <5) msg = "Password should be at least 5 digit long!";
                                     setLoginState({...LoginState, password:value, password_err:msg});
                                 
                             }} />

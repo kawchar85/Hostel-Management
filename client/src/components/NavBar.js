@@ -53,14 +53,27 @@ export default function NavBar(props) {
                                 }
                                 )}
 
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="/hostel/420">Custom Test</NavDropdown.Item>
+                                
 
                             </NavDropdown>
 
-
-                            <Nav.Link href={"/" + page1}>{page1}</Nav.Link>
+                            {isLogged() && isAdministration && (
+                                <Nav.Link href={"/admin" + page1}>{page1}</Nav.Link>
+                            ) }
+                            {isLogged() && !isAdministration && (
+                                <Nav.Link href={"/" + page1}>{page1}</Nav.Link>
+                            ) }
+                            {!isLogged() && (
+                                <Nav.Link href={"/" + page1}>{page1}</Nav.Link>
+                            ) }
                             <Nav.Link href={"/" + page2}>{page2}</Nav.Link>
+
+                            {!isAdministration() && isLogged() && (
+                                <Nav.Link href={"/complain"}>Complain</Nav.Link>
+                            )
+
+                            }
+
                             {isAdministration()&&(<Nav.Link href="/administration">Administration</Nav.Link>)}                            
 
                         </Nav>
