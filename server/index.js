@@ -580,6 +580,18 @@ app.delete("/delete/room/:hostel_id&:room_id", (req, res) => {
         }
     });
 });
+app.delete("/delete/admin/:mail", (req, res) => {
+    const mail = req.params.mail;
+    db.query("DELETE FROM administration WHERE Email = ?", mail, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log("admin deleted");
+            res.send("ok");
+        }
+    });
+});
 
 app.get("/getData", (req, res) => {
     console.log("now in get Data");
@@ -638,7 +650,22 @@ app.get("/getData/student/reg", (req, res) => {
         }
     });
 });
-
+app.get("/getData/student/info", (req, res) => {
+    let reg = req.query.reg;
+    db.query(`SELECT * FROM students WHERE Reg = ?`, reg ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            console.log(result);
+            if(result.length == 0){
+                res.send("notRegistered");
+            } else {
+                res.send(result);
+            }
+        }
+    });
+});
 app.get("/getData/user/", (req, res) => {
     console.log("preityyy");
     console.log(req.query);
@@ -671,6 +698,17 @@ app.get("/getData/user/", (req, res) => {
     
 });
 
+app.get("/getData/admin/", (req, res) => {
+    let mail = req.query.mail;
+    db.query(`SELECT * FROM administration WHERE Email = ?`, mail ,(err, result) => {
+        if (err) {
+            console.log(err);
+            res.send("error");
+        } else {
+            res.send(result);
+        }
+    });
+});
 
 app.get("/getData/login", (req, res) => {
     console.log("NOW IN QUERY")
