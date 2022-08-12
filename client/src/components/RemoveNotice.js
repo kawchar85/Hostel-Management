@@ -12,7 +12,7 @@ export default function RemoveNotice(props) {
 
     const handleDelete = () => {
 
-        Axios.delete(`http://localhost:3001/delete/notice/${props.notice.DateTime}&${props.notice.Title}`).then((response) => {
+        Axios.delete(`http://localhost:3001/delete/notice/${formatDate(props.notice.DateTime)}&${props.notice.Title}`).then((response) => {
             if(response.data === "error"){
                 alert("Opps!! Something wrong!! Try agin later...");
                 setModalShow(false); window.location.reload();
@@ -27,6 +27,12 @@ export default function RemoveNotice(props) {
         if(s.length<x) return s;
         else return s.substring(0,x-3)+"...";
     }
+
+    const formatDate = (dt) => {
+        if(dt === "0000-00-00 00:00:00") return dt;
+        else return(Moment(dt).format('YYYY-MM-DD HH:mm:ss'));
+    }
+
     return (
         <>
 
