@@ -375,6 +375,30 @@ app.put("/update/guardian", (req, res) => {
     );
 
 });
+app.put("/update/guardian_info", (req, res) => {
+    const data = req.body;
+    const phone = data.phone;
+    const address = data.address;
+    const name = data.name;
+    const prev_phone = data.prev_phone;
+
+    console.log(data);
+
+    db.query(
+        "UPDATE guardian_info SET Phone = ? , Address = ?, Name = ? WHERE Phone = ?",
+        [phone, address, name, prev_phone],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.send("error");
+            } else {
+                console.log(result);
+                res.send("ok");
+            }
+        }
+    );
+
+});
 
 app.put("/update/hostel", (req, res) => {
     const data = req.body;
