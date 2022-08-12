@@ -66,12 +66,12 @@
     },
     {
         "title": "View Complains",
-        "priority": 16,
+        "priority": 10,
         "path": "?section=complain&&action=view"
     },
     {
         "title": "Delete Complain",
-        "priority": 16,
+        "priority": 10,
         "path": "?section=complain&&action=remove"
     }
 ]
