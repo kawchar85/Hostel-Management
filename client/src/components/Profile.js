@@ -188,6 +188,20 @@ const getGuardianInfo = async() => {
     </div>
   </Alert>
   {!show && (
+    <div className="container">
+        <div style={{
+        textShadow: "#f9fafb 0px 1px 0px, #0d6efd 3px 3px 3px",
+        textAlign: "center",
+        textTransform: "uppercase",
+        color: "#666",
+        margin: "0 0 30px 0",
+        letterSpacing: "4px",
+        font: "normal 30px/2 Segoe Print,Verdana, Helvetica",
+        position: "relative",
+    }} > 
+     Profile of {std.std_name}
+
+                    </div>
     <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="reg">
             <Form.Label>Registration No</Form.Label>
@@ -329,6 +343,7 @@ const getGuardianInfo = async() => {
             Update Profile!
         </Button>
     </Form>
+    </div>
   )}
   </div>
   )
