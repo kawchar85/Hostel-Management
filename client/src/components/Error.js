@@ -14,7 +14,7 @@ export default function Error() {
                         <Card.Img variant="top" src="images/404.png" width="220px" height="400px" />
                     </Card>
                     <Card bg="light" border="primary" style={{ width: '18rem' }}>
-                        <Card.Header><h2>401 Error | Page not found</h2></Card.Header>
+                        <Card.Header><h2>404 Error | Page not found</h2></Card.Header>
                         <Card.Body>
                             <Card.Text>
                                 Sorry, but nothing matched your search terms. Please try again with some different keywords.
