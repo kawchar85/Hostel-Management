@@ -126,7 +126,6 @@ const [roomID, setRoomID] = useState(0);
               Total Seats : {hostelData.Total_Seats} <br/>
               Occupied Seats : {hostelData.Occupied_Seats} <br/>
               Type : {hostelData.Type} <br/>
-              Provost : ???(different card?)<br/> 
               Office : {hostelData.Address} <br/>
               Contact : {hostelData.Contact}
 
@@ -196,7 +195,7 @@ const [roomID, setRoomID] = useState(0);
                 fontWeight: 'bold',
             }}>
                 <Spinner animation="grow" variant="warning" />
-                Seat Available in Room(s) 
+                Administration
             </div>
 
             <hr style={{ backgroundColor: '#786017', height: 2.2, }} />
@@ -206,8 +205,10 @@ const [roomID, setRoomID] = useState(0);
                 letterSpacing: "4px",
                 font: "normal 20px/1 Comic Sans MS,Verdana, Helvetica",
             }}>
-              1, 2, 4, 6 <br/>
-              8, 10, 12<br/>
+              Provost: Abdul Karim<br/>
+              Assistant Provost: Kuddus Sir<br/>
+              Assistant Provost: Abc Xyz<br/>
+              Supervisor: Shanto Ahmed
               
             </div>
 
