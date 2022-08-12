@@ -1,7 +1,28 @@
 [
     {
+        "title": "Admin Manage",
+        "priority": 20,
+        "childrens": [
+            {
+                "title": "Add New Admin",
+                "priority": 20,
+                "path": "?section=admin&&action=add"
+            },
+            {
+                "title": "Remove Admin",
+                "priority": 20,
+                "path": "?section=admin&&action=remove"
+            },
+            {
+                "title": "Update Admin",
+                "priority": 19,
+                "path": "?section=update&&action=update"
+            }
+        ]
+    },
+    {
         "title": "Hostel Manage",
-        "priority": 1,
+        "priority": 19,
         "childrens": [
             {
                 "title": "Add new",
@@ -141,20 +162,36 @@
                 "path": "?section=notice&&action=add"
             },
             {
-                "title": "Delete Notice",
+                "title": "View Notices",
                 "priority": 17,
-                "path": "?section=notice&&action=remove"
+                "path": "?section=notice&&action=view"
             },
             {
                 "title": "Update Notice",
                 "priority": 17,
                 "path": "?section=notice&&action=update"
+            },
+            {
+                "title": "Delete Notice",
+                "priority": 17,
+                "path": "?section=notice&&action=remove"
             }
         ]
     },
     {
-        "title": "Complains",
-        "priority": 17,
-        "path": "?section=complain&&action=show"
+        "title": "Complains Manage",
+        "priority": 16,
+        "childrens": [
+            {
+                "title": "View Complains",
+                "priority": 16,
+                "path": "?section=complain&&action=view"
+            },
+            {
+                "title": "Delete Complain",
+                "priority": 16,
+                "path": "?section=complain&&action=remove"
+            }
+        ]
     }
 ]
