@@ -16,6 +16,7 @@ import StudentHome from "./components/StudentHome";
 import AdminReg from "./components/AdminReg";
 import ForgotPass from "./components/ForgotPass";
 import Complain from "./components/Complain";
+import AdminProfile from "./components/AdminProfile";
 
 import { PublicContex } from "./components/PublicContext";
 
@@ -28,7 +29,7 @@ function App() {
   const [hostelList, setHostelList] = useState([]);
   const [user, setUser] = useState(
     {
-      rule_id: 20,
+      rule_id: -1,
       email: "c@gmail.com"
     }
   );
@@ -88,6 +89,7 @@ function App() {
           <Route path="/hostel/:hostelId/room/:roomId" element={<Room />} />
           <Route path="/administration" element={<Administration />} />
           <Route path="/studenthome" element={<StudentHome />} />
+          <Route path="/adminprofile" element={<AdminProfile />} />
 
 
           <Route path="*" element={<Error />} />
